@@ -1,0 +1,18 @@
+/* Read More functionality */
+.testimonial {
+    max-height: 80px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.testimonial.expanded {
+    max-height: 1000px; /* Large enough to show full content */
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+}
