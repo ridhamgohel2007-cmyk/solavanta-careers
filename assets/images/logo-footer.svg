@@ -3,7 +3,7 @@
   <g transform="translate(138, 3) scale(1.1)">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0 4.0L13.0 8.0L8.5 12.0L8.5 8.0L8.5 4.0L8.5 0.0L13.0 0.0L13.0 4.0Z" fill="#73AF95"/>
     <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 4.0L8.5 0.0L4.0 0.0L0.0 4.0L4.0 4.0L8.5 4.0Z" fill="#689775"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0 4.0L8.5 4.0L8.5 0.0L13.0 0.0L13.0 4.0Z" fill="#488A6D"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0 4.0L8.5 4.0L8.5 0.0L13.0 0.0L13.0 4.0Z" fill="#108A65"/>
   </g>
-  <text x="156" y="21" font-family="'Nunito Sans', -apple-system, sans-serif" font-weight="800" font-size="12" fill="#C7493A" letter-spacing="1">CAREERS</text>
+  <text x="156" y="21" font-family="'Nunito Sans', -apple-system, sans-serif" font-weight="800" font-size="12" fill="#D93829" letter-spacing="1">CAREERS</text>
 </svg>

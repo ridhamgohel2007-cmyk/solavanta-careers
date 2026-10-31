@@ -225,12 +225,12 @@
       });
     }
 
-    /*===== You After ElevateMe (non-tech placement) ======*/
-    const swiperYouAfterElevateme = document.querySelector('.swiper-you-after-elevateme');
+    /*===== You After Solavanta (non-tech placement) ======*/
+    const swiperYouAfterElevateme = document.querySelector('.swiper-you-after-solavanta');
     if (swiperYouAfterElevateme) {
       const totalYouAfterSlides = swiperYouAfterElevateme.querySelectorAll('.swiper-slide').length;
-      const youAfterPrev = document.querySelector('.swiper-you-after-elevateme-prev');
-      const youAfterNext = document.querySelector('.swiper-you-after-elevateme-next');
+      const youAfterPrev = document.querySelector('.swiper-you-after-solavanta-prev');
+      const youAfterNext = document.querySelector('.swiper-you-after-solavanta-next');
 
       new Swiper(swiperYouAfterElevateme, {
         loop: totalYouAfterSlides > 1,
@@ -257,8 +257,8 @@
           },
         },
         navigation: {
-          nextEl: '.swiper-you-after-elevateme-next',
-          prevEl: '.swiper-you-after-elevateme-prev',
+          nextEl: '.swiper-you-after-solavanta-next',
+          prevEl: '.swiper-you-after-solavanta-prev',
         },
         on: {
           init: function () {
