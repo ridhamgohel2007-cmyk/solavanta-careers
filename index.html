@@ -89,7 +89,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 
 	<body class="home wp-singular page-template page-template-home-v2 page-template-home-v2-php page page-id-1192 wp-theme-solvantacareers wp-child-theme-solvantacareersChild">
-		<!-- Solvanta Premium Preloader (inspired by vision-xperts reference) -->
+		<!-- Solvanta Premium Preloader -->
 	<div id="preloader" class="preloader">
 		<div class="animation-preloader">
 			<div class="spinner">
@@ -114,14 +114,6 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			</div>
 			<p class="preloader-subtext">CAREER ACCELERATION PLATFORM</p>
 		</div>
-		<div class="loader">
-			<div class="row g-0 h-100">
-				<div class="col-3 loader-section section-left"><div class="bg"></div></div>
-				<div class="col-3 loader-section section-left"><div class="bg"></div></div>
-				<div class="col-3 loader-section section-right"><div class="bg"></div></div>
-				<div class="col-3 loader-section section-right"><div class="bg"></div></div>
-			</div>
-		</div>
 	</div>
 
 	<style>
@@ -137,11 +129,15 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			width: 100vw;
 			z-index: 9999999;
 			overflow: hidden;
+			background: #FFFFFF;
+			transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+			will-change: transform, opacity;
+			box-shadow: 0 25px 60px rgba(15, 23, 42, 0.2);
 		}
 		.preloader .animation-preloader {
 			z-index: 1000;
 			text-align: center;
-			transition: all 0.4s ease-out;
+			transition: opacity 0.4s ease-out, transform 0.4s ease-out, filter 0.4s ease-out;
 		}
 		.preloader .animation-preloader .spinner {
 			position: relative;
@@ -236,44 +232,16 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			margin-top: 14px;
 			font-family: 'Nunito Sans', sans-serif;
 		}
-		.preloader .loader {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			font-size: 0;
-			z-index: 1;
+
+		/* Smooth, Unified Luxury Curtain Reveal (No split strips) */
+		.preloader.loaded {
+			transform: translateY(-100%);
 			pointer-events: none;
-		}
-		.preloader .loader .row {
-			height: 100%;
-			margin: 0;
-		}
-		.preloader .loader .loader-section {
-			padding: 0;
-			height: 100%;
-		}
-		.preloader .loader .loader-section .bg {
-			background-color: #FFFFFF;
-			height: 100%;
-			left: 0;
-			width: 100%;
-			transition: all 800ms cubic-bezier(0.77, 0, 0.175, 1);
 		}
 		.preloader.loaded .animation-preloader {
 			opacity: 0;
-			transform: scale(0.9);
-			transition: 0.35s ease-out;
-		}
-		.preloader.loaded .loader-section.section-left .bg {
-			width: 0;
-			transition: 0.7s 0.25s all cubic-bezier(0.77, 0, 0.175, 1);
-		}
-		.preloader.loaded .loader-section.section-right .bg {
-			width: 0;
-			float: right;
-			transition: 0.7s 0.25s all cubic-bezier(0.77, 0, 0.175, 1);
+			transform: translateY(-25px) scale(0.92);
+			filter: blur(6px);
 		}
 		@media (max-width: 767px) {
 			.preloader .animation-preloader .spinner {
@@ -290,12 +258,157 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				letter-spacing: 3px;
 			}
 		}
+
+		/* ===== High-End Scroll Reveal Animations ===== */
+		#scroll-progress-bar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 3px;
+			width: 0%;
+			background: linear-gradient(90deg, #25356F 0%, #43AEE3 50%, #6FD4FF 100%);
+			z-index: 10000000;
+			transition: width 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+			box-shadow: 0 0 10px rgba(67, 174, 227, 0.6);
+			pointer-events: none;
+		}
+
+		/* Dynamic Header Elevation on Scroll */
+		.header-section.scrolled {
+			background: rgba(255, 255, 255, 0.94) !important;
+			backdrop-filter: blur(14px);
+			-webkit-backdrop-filter: blur(14px);
+			box-shadow: 0 8px 24px rgba(37, 53, 111, 0.08);
+			padding-top: 8px !important;
+			padding-bottom: 8px !important;
+			transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		/* Core Reveal Animations */
+		.scroll-reveal {
+			opacity: 0;
+			transform: translate3d(0, 36px, 0);
+			filter: blur(3px);
+			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal.revealed {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		/* Zoom Reveal for Images, Badges, Metrics */
+		.scroll-reveal-zoom {
+			opacity: 0;
+			transform: scale(0.92) translate3d(0, 20px, 0);
+			filter: blur(3px);
+			transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal-zoom.revealed {
+			opacity: 1;
+			transform: scale(1) translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		/* Lateral Directional Reveals */
+		.scroll-reveal-left {
+			opacity: 0;
+			transform: translate3d(-36px, 0, 0);
+			filter: blur(3px);
+			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal-left.revealed {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		.scroll-reveal-right {
+			opacity: 0;
+			transform: translate3d(36px, 0, 0);
+			filter: blur(3px);
+			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal-right.revealed {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		/* Staggered Children Delays */
+		.stagger-parent .scroll-reveal:nth-child(1),
+		.stagger-parent .scroll-reveal-zoom:nth-child(1) { transition-delay: 0.05s; }
+		.stagger-parent .scroll-reveal:nth-child(2),
+		.stagger-parent .scroll-reveal-zoom:nth-child(2) { transition-delay: 0.14s; }
+		.stagger-parent .scroll-reveal:nth-child(3),
+		.stagger-parent .scroll-reveal-zoom:nth-child(3) { transition-delay: 0.23s; }
+		.stagger-parent .scroll-reveal:nth-child(4),
+		.stagger-parent .scroll-reveal-zoom:nth-child(4) { transition-delay: 0.32s; }
+		.stagger-parent .scroll-reveal:nth-child(5),
+		.stagger-parent .scroll-reveal-zoom:nth-child(5) { transition-delay: 0.41s; }
+		.stagger-parent .scroll-reveal:nth-child(6),
+		.stagger-parent .scroll-reveal-zoom:nth-child(6) { transition-delay: 0.50s; }
+
+		/* Hover Micro-Interactions on Cards */
+		.different-card-box,
+		.capability-card,
+		.stat-metric-card,
+		.progress-box,
+		.board-box {
+			transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+						box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+						border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+		}
+		.different-card-box:hover,
+		.capability-card:hover,
+		.stat-metric-card:hover {
+			transform: translateY(-6px) !important;
+			box-shadow: 0 16px 36px rgba(37, 53, 111, 0.12) !important;
+			border-color: rgba(67, 174, 227, 0.35) !important;
+		}
+
+		/* Subtle Floating Hero Animation */
+		@keyframes floatStudent {
+			0%, 100% { transform: translateY(0px); }
+			50% { transform: translateY(-8px); }
+		}
+		.banner-image img {
+			animation: floatStudent 6s ease-in-out infinite;
+		}
+
+		/* Accessibility: Prefers Reduced Motion */
+		@media (prefers-reduced-motion: reduce) {
+			.scroll-reveal,
+			.scroll-reveal-zoom,
+			.scroll-reveal-left,
+			.scroll-reveal-right {
+				opacity: 1 !important;
+				transform: none !important;
+				filter: none !important;
+				transition: none !important;
+			}
+			.banner-image img {
+				animation: none !important;
+			}
+		}
 	</style>
 
 	<script>
 		(function() {
 			var startTime = Date.now();
-			var minDisplayTime = 700; // Smooth showcase minimum
+			var minDisplayTime = 750; // Showcase smooth animation
 			var preloader = document.getElementById('preloader');
 
 			function hideLoader() {
@@ -304,10 +417,11 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				var remaining = Math.max(0, minDisplayTime - elapsed);
 				setTimeout(function() {
 					preloader.classList.add('loaded');
+					document.body.classList.add('page-revealed');
 					setTimeout(function() {
 						preloader.style.display = 'none';
 						preloader.remove();
-					}, 950);
+					}, 900);
 				}, remaining);
 			}
 
@@ -407,7 +521,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				<div class="banner-inner">
 					<div class="row">
 						<div class="col-12 col-lg-8  col-xl-7">
-							<div class="banner-content">
+							<div class="banner-content scroll-reveal">
 								<h1>Land a Sponsored Job in the U.S.</h1>
 <h3>We Help International Talent Secure Full-Time Roles</h3>
 								<h6>Structured placement program for OPT, STEM OPT and H-1 candidates — from application to interview preparation to getting you a job offer.</h6>
@@ -418,7 +532,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 							</div>
 						</div>
 						<div class="col-12 col-lg-4 col-xl-5">
-							<div class="banner-image">
+							<div class="banner-image scroll-reveal-zoom">
 								<img src="assets/images/banner-student-img.png?v=4" alt="Solvanta Career Student">
 							</div>
 							<div class="logo-icon">
@@ -436,7 +550,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				<div class="career-board-inner">
 					<div class="row align-items-center justify-content-center">
 						<div class="col-12 col-lg-12">
-							<div class="board-box">
+							<div class="board-box scroll-reveal">
 								<div class="board-inner">
 									<div class="img-box">
 										<a href="#//wp-content/uploads/2025/10/OH_State_Board_of_Career_Colleges___Schools__state_approval_for_Solvanta Career_Columbus_2025-05-22.pdf" target="_blank"><img src="assets/images/state-of-ohio.png" alt=""></a>
@@ -622,12 +736,12 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				</div>
 				<div class="row">
 					<div class="col-12 col-lg-7">
-						<div class="who-img-box" style="border-radius: 0.875rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); border: 1px solid rgba(0,0,0,0.06);">
+						<div class="who-img-box scroll-reveal-left" style="border-radius: 0.875rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); border: 1px solid rgba(0,0,0,0.06);">
 							<img class="img-fluid" src="assets/images/solvanta-careers.png" alt="Solvanta Career" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0.875rem;">
 						</div>
 					</div>
 					<div class="col-12 col-lg-5">
-						<div class="who-info-box">
+						<div class="who-info-box scroll-reveal-right">
                             <h5>Here at Solvanta Career, we explain</h5>
 <ul>
 <li>Who Solvanta Career is</li>
@@ -649,7 +763,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- weekly webinar section Section Start -->
 		<section class="webinar-section bg-sea-green mt-100">
 			<div class="container">
-				<div class="webinar-main">
+				<div class="webinar-main scroll-reveal-zoom">
 					<div class="main-content">
 						<div class="content-box">
 							<img src="assets/images/quotes-img.svg" alt="">
@@ -690,9 +804,9 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 					<h2>Solvanta Career <span>Does 2 Things</span></h2>
 <h5>We proudly operate with a transparent model focused on helping candidates secure roles based on their real capabilities.</h5>
 				</div>
-				<div class="row">
+				<div class="row stagger-parent">
                      					<div class="col-12 col-lg-6">
-						<div class="capability-card">
+						<div class="capability-card scroll-reveal">
 							<div class="capability-card-title">
 								<div class="icon-box">
 									<span class="custom-icon icon-calendar-ic"></span>
@@ -703,7 +817,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						</div>
 					</div>
                      					<div class="col-12 col-lg-6">
-						<div class="capability-card">
+						<div class="capability-card scroll-reveal">
 							<div class="capability-card-title">
 								<div class="icon-box">
 									<span class="custom-icon icon-chat-ic"></span>
@@ -726,9 +840,9 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 					<h2>Let Our <span>Numbers Speak</span></h2>
 <h5>Everything we provide -resume alignment, interview preparation, structured job strategy, mock interviews, and ongoing guidance &#8211; is designed to get you job offers</h5>
 				</div>
-				<div class="row">
+				<div class="row stagger-parent">
                      					<div class="col-12 col-md-6 col-lg-4">
-						<div class="stat-metric-card">
+						<div class="stat-metric-card scroll-reveal-zoom">
 							<div class="icon-box">
 								<span class="custom-icon icon-briefcase"></span>
 							</div>
@@ -739,7 +853,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						</div>
 					</div>
                         					<div class="col-12 col-md-6 col-lg-4">
-						<div class="stat-metric-card">
+						<div class="stat-metric-card scroll-reveal-zoom">
 							<div class="icon-box">
 								<span class="custom-icon icon-dollar-ic"></span>
 							</div>
@@ -750,7 +864,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						</div>
 					</div>
                         					<div class="col-12 col-md-6 col-lg-4">
-						<div class="stat-metric-card">
+						<div class="stat-metric-card scroll-reveal-zoom">
 							<div class="icon-box">
 								<span class="custom-icon icon-trending-up"></span>
 							</div>
@@ -771,14 +885,14 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			<div class="container">
 				<div class="row">
 					<div class="col-12 col-lg-6">
-						<div class="image-box">
+						<div class="image-box scroll-reveal-zoom">
 							<img src="assets/images/student-girl-img-1.png?v=5" alt="Solvanta Career Student">
 						</div>
 					</div>
 					<div class="col-12 col-lg-6">
-						<div class="content-box">
+						<div class="content-box stagger-parent">
 							<h2>What Makes Us <span>Different</span></h2>
-                             							<div class="different-card-box">
+                             							<div class="different-card-box scroll-reveal">
 								<div class="different-card-title">
 									<div class="icon-box">
 										<span class="custom-icon icon-document-ic"></span>
@@ -787,7 +901,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 								</div>
 								<p>Every component of our model is designed to improve employability. Our training focuses on real-world skills and industry relevance to help learners secure meaningful job opportunities.</p>
 							</div>
-														<div class="different-card-box">
+														<div class="different-card-box scroll-reveal">
 								<div class="different-card-title">
 									<div class="icon-box">
 										<span class="custom-icon icon-union"></span>
@@ -796,7 +910,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 								</div>
 								<p>Preparation is aligned with real hiring environments, including mock interviews, practical assessments, and recruiter-style evaluations.</p>
 							</div>
-														<div class="different-card-box">
+														<div class="different-card-box scroll-reveal">
 								<div class="different-card-title">
 									<div class="icon-box">
 										<span class="custom-icon icon-check-list"></span>
@@ -805,7 +919,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 								</div>
 								<p>We understand OPT and STEM OPT timelines and align preparation to help students maximize their job opportunities within visa deadlines.</p>
 							</div>
-														<div class="different-card-box">
+														<div class="different-card-box scroll-reveal">
 								<div class="different-card-title">
 									<div class="icon-box">
 										<span class="custom-icon icon-diagram"></span>
@@ -833,36 +947,36 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 						<div class="progress-img">
 							<img src="assets/images/progress-img.svg" alt="">
 						</div>
-						<div class="progress-box-list">
-                                                        							<div class="progress-box">
+						<div class="progress-box-list stagger-parent">
+                                                        							<div class="progress-box scroll-reveal">
 								<span class="progress-number">1</span>
 								<h5>Build a Portfolio</h5>
 								<p>We Setup your resume, LinkedIn profile, and Github. Align it with current Market trends.</p>
 							</div>
                             						
 							
-                                                        							<div class="progress-box">
+                                                        							<div class="progress-box scroll-reveal">
 								<span class="progress-number">2</span>
 								<h5>Targeted Application Strategy</h5>
 								<p>We identify the right job titles, industries, and employers aligned with your background</p>
 							</div>
                             						
 							
-                                                        							<div class="progress-box">
+                                                        							<div class="progress-box scroll-reveal">
 								<span class="progress-number">3</span>
 								<h5>Mock Interviews Practice</h5>
 								<p>We simulate real interview environments, refine your responses, and sharpen your delivery</p>
 							</div>
                             						
 							
-                                                        							<div class="progress-box">
+                                                        							<div class="progress-box scroll-reveal">
 								<span class="progress-number">4</span>
 								<h5>Active Placement Execution</h5>
 								<p>We support you through ongoing interviews, optimize performance after each round</p>
 							</div>
                             						
 							
-                                                                                    <div class="progress-box">
+                                                                                    <div class="progress-box scroll-reveal">
 								<span class="progress-number">5</span>
 								<div class="dream-job-box">
 									<img src="assets/images/rocket-ic.svg" alt="">
@@ -1196,7 +1310,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
             <div class="accordion" id="accordionExample">
 
-                                <div class="accordion-item">
+                                <div class="accordion-item scroll-reveal">
 
                     <h2 class="accordion-header" id="heading0">
 
@@ -1217,7 +1331,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
                 </div>
 
-                                <div class="accordion-item">
+                                <div class="accordion-item scroll-reveal">
 
                     <h2 class="accordion-header" id="heading1">
 
@@ -1238,7 +1352,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
                 </div>
 
-                                <div class="accordion-item">
+                                <div class="accordion-item scroll-reveal">
 
                     <h2 class="accordion-header" id="heading2">
 
@@ -1259,7 +1373,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
                 </div>
 
-                                <div class="accordion-item">
+                                <div class="accordion-item scroll-reveal">
 
                     <h2 class="accordion-header" id="heading3">
 
@@ -1280,7 +1394,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
                 </div>
 
-                                <div class="accordion-item">
+                                <div class="accordion-item scroll-reveal">
 
                     <h2 class="accordion-header" id="heading4">
 
@@ -2208,6 +2322,74 @@ $(document).ready(function() {
 </script>
 
 </div>
+
+
+<!-- Solvanta Intelligent Scroll & Reveal Engine -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Top Scroll Progress Indicator
+    var progressBar = document.getElementById('scroll-progress-bar');
+    if (!progressBar) {
+        progressBar = document.createElement('div');
+        progressBar.id = 'scroll-progress-bar';
+        document.body.prepend(progressBar);
+    }
+
+    // 2. Optimized Scroll Listener (Header Elevation + Progress)
+    var header = document.querySelector('.header-section');
+    var ticking = false;
+
+    function onScroll() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        if (progressBar) progressBar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+
+        if (header) {
+            if (scrollTop > 35) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+        if (!ticking) {
+            window.requestAnimationFrame(onScroll);
+            ticking = true;
+        }
+    }, { passive: true });
+    onScroll();
+
+    // 3. High-Performance IntersectionObserver for Viewport Reveals
+    if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        var targets = document.querySelectorAll('.scroll-reveal, .scroll-reveal-zoom, .scroll-reveal-left, .scroll-reveal-right');
+        targets.forEach(function (el) {
+            revealObserver.observe(el);
+        });
+    } else {
+        // Fallback for older browsers
+        var fallbackTargets = document.querySelectorAll('.scroll-reveal, .scroll-reveal-zoom, .scroll-reveal-left, .scroll-reveal-right');
+        fallbackTargets.forEach(function (el) {
+            el.classList.add('revealed');
+        });
+    }
+});
+</script>
 
 </body>
 
