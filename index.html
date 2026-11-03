@@ -180,7 +180,9 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-global-styles-placeholder-inline-css */
 </style>
 <link rel='stylesheet' id='contact-form-7-css' href="assets/css/styles.css" media='all' />
-<link rel='stylesheet' id='solvanta-fonts-family-css' href='https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap' media='all' />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel='stylesheet' id='solvanta-fonts-family-css' href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap' media='all' />
 <link rel='stylesheet' id='solvanta-vendor-css' href="assets/css/vendor.min.css" media='all' />
 <link rel='stylesheet' id='solvanta-style-css' href="assets/css/style.css" media='all' />
 <link rel='stylesheet' id='solvanta-read-more-css' href="assets/css/read-more.css" media='all' />
@@ -190,6 +192,252 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <meta name="generator" content="WordPress 7.1.4" />
 <link rel='shortlink' href='#/' />
 	<!-- Google tag (gtag.js) -->  <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-4T4R1CHH51'); </script>
+
+	<!-- Solvanta Premium Typography System: Space Grotesk + Inter -->
+	<style id="solvanta-typography-system">
+		:root {
+			--bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+			--font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+			--font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+		}
+
+		/* Universal Base Typography */
+		body {
+			font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+			color: #0F172A !important;
+			font-size: 16px !important;
+			line-height: 1.6 !important;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		/* Headings Hierarchy with Space Grotesk */
+		h1, h2, h3, h4, h5, h6,
+		.h1, .h2, .h3, .h4, .h5, .h6,
+		.inner-title-box h2,
+		.sec-title-box h2,
+		.banner-content h1,
+		.banner-content h3,
+		.metric-value,
+		.metric-content-box h3 {
+			font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif !important;
+		}
+
+		/* 1. Hero Section (Stronger, bolder, high-impact) */
+		.banner-content h1 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 700 !important;
+			font-size: clamp(2.5rem, 5vw, 3.75rem) !important;
+			letter-spacing: -0.03em !important;
+			line-height: 1.14 !important;
+			color: #25356F !important;
+			margin-bottom: 0.75rem !important;
+		}
+
+		.banner-content h3 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 600 !important;
+			font-size: clamp(1.2rem, 2.4vw, 1.55rem) !important;
+			letter-spacing: -0.015em !important;
+			color: #43AEE3 !important;
+			margin-bottom: 1.25rem !important;
+			line-height: 1.35 !important;
+		}
+
+		.banner-content h6,
+		.banner-content p {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			font-size: 1.125rem !important; /* 18px */
+			line-height: 1.65 !important;
+			color: #475569 !important;
+			max-width: 600px;
+			margin-bottom: 2rem !important;
+		}
+
+		/* 2. Navigation */
+		.navbar .nav-link,
+		.navbar-nav .nav-link,
+		.header-section a {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 500 !important;
+			font-size: 0.95rem !important;
+			letter-spacing: -0.01em;
+		}
+
+		/* 3. Section Titles */
+		.inner-title-box h2,
+		.sec-title-box h2,
+		.who-are-we-section h2,
+		.capabilities-section h2,
+		.success-student-info-section h2,
+		.what-makes-us-different-section h2,
+		.career-progress-section h2,
+		.alumni-success-section h2,
+		.faq-section h2 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 700 !important;
+			letter-spacing: -0.025em !important;
+			line-height: 1.2 !important;
+			color: #25356F !important;
+		}
+
+		.inner-title-box h5,
+		.sec-title-box h5 {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			font-size: 1.05rem !important;
+			line-height: 1.65 !important;
+			color: #64748B !important;
+			margin-top: 0.65rem !important;
+		}
+
+		/* 4. Middle Sections & Service Cards Readability */
+		.different-card-box h5,
+		.capability-card h5,
+		.progress-box h5,
+		.who-info-box h5 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 600 !important;
+			font-size: 1.2rem !important;
+			letter-spacing: -0.015em !important;
+			color: #0F172A !important;
+			margin-bottom: 0.5rem !important;
+		}
+
+		.different-card-box p,
+		.capability-card p,
+		.progress-box p,
+		.who-info-box p,
+		.who-info-box ul li {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			font-size: 1rem !important; /* 16px */
+			line-height: 1.65 !important;
+			color: #475569 !important;
+		}
+
+		.who-info-box ul {
+			margin-bottom: 1.75rem !important;
+		}
+
+		.who-info-box ul li {
+			margin-bottom: 0.65rem !important;
+		}
+
+		/* 5. Statistics (1800+, $86K, 82%) */
+		.metric-value,
+		.metric-content-box h3,
+		.stats-item h3 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 700 !important;
+			font-size: 2.75rem !important;
+			letter-spacing: -0.03em !important;
+			color: #25356F !important;
+			line-height: 1.1 !important;
+		}
+
+		.metric-content-box h5,
+		.stat-metric-card h5 {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 500 !important;
+			font-size: 0.95rem !important;
+			color: #64748B !important;
+			letter-spacing: -0.01em;
+			margin-top: 0.35rem !important;
+		}
+
+		/* 6. Testimonials & Alumni Success */
+		.alumni-success-content p,
+		.student-quote-box p,
+		.student-testimonials-section p {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			font-size: 1rem !important; /* 16px */
+			line-height: 1.65 !important;
+			color: #334155 !important;
+		}
+
+		.student-quote-box h5,
+		.alumni-success-content h5 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 600 !important;
+			letter-spacing: -0.015em;
+		}
+
+		/* 7. FAQ Questions & Answers */
+		.accordion-button {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 600 !important;
+			font-size: 1.05rem !important;
+			color: #0F172A !important;
+			letter-spacing: -0.01em;
+			line-height: 1.45 !important;
+		}
+
+		.accordion-body,
+		.accordion-body p {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			font-size: 0.985rem !important; /* ~16px */
+			line-height: 1.65 !important;
+			color: #475569 !important;
+		}
+
+		/* 8. Buttons & Actions */
+		.btn,
+		.btn-primary,
+		.btn-secondary,
+		.btn-outline-secondary,
+		.btn-black,
+		.banner-btn a {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 600 !important;
+			letter-spacing: 0.015em !important;
+			font-size: 0.95rem !important;
+		}
+
+		/* 9. Consultation Form & Modals */
+		input, textarea, select, label, .form-label, .form-control {
+			font-family: 'Inter', sans-serif !important;
+		}
+
+		.form-label {
+			font-weight: 600 !important;
+			font-size: 0.9rem !important;
+			color: #334155 !important;
+		}
+
+		.form-control {
+			font-size: 0.975rem !important;
+		}
+
+		/* 10. Footer */
+		footer, .footer-section, .footer-section p, .footer-section a {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			font-size: 0.925rem !important;
+			line-height: 1.6 !important;
+		}
+
+		.footer-section h5, .footer-section h6 {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 600 !important;
+			letter-spacing: -0.015em;
+		}
+
+		/* 11. Preloader font consistency */
+		.preloader .animation-preloader .txt-loading {
+			font-family: 'Space Grotesk', sans-serif !important;
+			font-weight: 700 !important;
+		}
+		.preloader p.preloader-subtext {
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 600 !important;
+			letter-spacing: 4px !important;
+		}
+	</style>
+
 </head>
 
 
