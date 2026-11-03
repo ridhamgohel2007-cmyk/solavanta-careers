@@ -1172,7 +1172,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				<div class="row">
 					<div class="col-12 col-lg-7">
 						<div class="who-img-box scroll-reveal-left" style="border-radius: 0.875rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15); border: 1px solid rgba(0,0,0,0.06);">
-							<img class="img-fluid" src="assets/images/solvanta-careers.png?v=4" alt="Solvanta Career" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0.875rem;">
+							<img class="img-fluid" src="assets/images/solvanta-careers.png?v=5" alt="Solvanta Career" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0.875rem;">
 						</div>
 					</div>
 					<div class="col-12 col-lg-5">
@@ -1321,7 +1321,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 				<div class="row">
 					<div class="col-12 col-lg-6">
 						<div class="image-box scroll-reveal-zoom">
-							<img src="assets/images/student-girl-img-1.png?v=7" alt="Solvanta Career Student">
+							<img src="assets/images/student-girl-img-1.png?v=8" alt="Solvanta Career Student">
 						</div>
 					</div>
 					<div class="col-12 col-lg-6">
@@ -1605,7 +1605,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
                      					<div class="col-12 col-md-6">
 						<div class="student-testimonials-content">
 							<div class="student-testimonials-image-box">
-								<img class="img-box" src="assets/images/1.png?v=2" alt="Rutvika testimonial">
+								<img class="img-box" src="assets/images/1.png?v=3" alt="Mohan success story">
 								<a href="https://youtu.be/ykIeMWHYNl4" class="play-btn" data-fancybox>
 									<img src="assets/images/play-ic.svg" alt="Play video">
 								</a>
@@ -1622,7 +1622,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
                     					<div class="col-12 col-md-6">
 						<div class="student-testimonials-content">
 							<div class="student-testimonials-image-box">
-								<img class="img-box" src="assets/images/2.png?v=2" alt="Rutvika testimonial">
+								<img class="img-box" src="assets/images/2.png?v=3" alt="Nik success story">
 								<a href="https://www.youtube.com/watch?v=uWGARX1T8_U" class="play-btn" data-fancybox>
 									<img src="assets/images/play-ic.svg" alt="Play video">
 								</a>
@@ -1639,7 +1639,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
                     					<div class="col-12 col-md-6">
 						<div class="student-testimonials-content">
 							<div class="student-testimonials-image-box">
-								<img class="img-box" src="assets/images/3.png?v=2" alt="Rutvika testimonial">
+								<img class="img-box" src="assets/images/3.png?v=3" alt="Chand success story">
 								<a href="https://youtu.be/4GGvrTa2fX8" class="play-btn" data-fancybox>
 									<img src="assets/images/play-ic.svg" alt="Play video">
 								</a>
@@ -1656,7 +1656,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
                     					<div class="col-12 col-md-6">
 						<div class="student-testimonials-content">
 							<div class="student-testimonials-image-box">
-								<img class="img-box" src="assets/images/pravin-1.png?v=2?v=2" alt="Rutvika testimonial">
+								<img class="img-box" src="assets/images/pravin-1.png?v=3" alt="Pravin success story">
 								<a href="https://youtu.be/cbUuZn2XJWM" class="play-btn" data-fancybox>
 									<img src="assets/images/play-ic.svg" alt="Play video">
 								</a>
@@ -2055,6 +2055,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
     </small>
 </div>
 <div class="action-btn"><input class="wpcf7-form-control wpcf7-submit has-spinner btn btn-black w-100" type="submit" value="Submit" /></div><div class="wpcf7-response-output" aria-hidden="true"></div>
+</div>
 </form>
 </div>
 							<!--<div class="form-policy-text">
@@ -2475,16 +2476,22 @@ var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof H
 	<script>
 		
 	(function() {
+    var daysEl = document.getElementById('days');
+    var hoursEl = document.getElementById('hours');
+    var minutesEl = document.getElementById('minutes');
+    var secondsEl = document.getElementById('seconds');
+    if (!daysEl && !hoursEl && !minutesEl && !secondsEl) return;
+
     function updateCountdown() {
         var now = new Date().getTime();
-        var distance = nextFridayTimestamp - now;
+        var targetTime = (typeof nextFridayTimestamp !== 'undefined') ? nextFridayTimestamp : now;
+        var distance = targetTime - now;
 
         if (distance < 0) {
-            // Timer expired
-            document.getElementById('days').textContent = 0;
-            document.getElementById('hours').textContent = 0;
-            document.getElementById('minutes').textContent = 0;
-            document.getElementById('seconds').textContent = 0;
+            if (daysEl) daysEl.textContent = 0;
+            if (hoursEl) hoursEl.textContent = 0;
+            if (minutesEl) minutesEl.textContent = 0;
+            if (secondsEl) secondsEl.textContent = 0;
             return;
         }
 
@@ -2493,10 +2500,10 @@ var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof H
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-        document.getElementById('seconds').textContent = seconds;
+        if (daysEl) daysEl.textContent = days;
+        if (hoursEl) hoursEl.textContent = hours;
+        if (minutesEl) minutesEl.textContent = minutes;
+        if (secondsEl) secondsEl.textContent = seconds;
     }
 
     updateCountdown();
@@ -2758,8 +2765,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
-</div>
 
 
 <!-- Solvanta Intelligent Scroll & Reveal Engine -->
