@@ -499,6 +499,22 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			font-weight: 600 !important;
 			letter-spacing: 4px !important;
 		}
+
+		/* 12. Accent Typography & Brand Color Harmonies */
+		h1 span, h2 span, h3 span,
+		.inner-title-box h2 span,
+		.sec-title-box h2 span,
+		.lets-content-box h2 span {
+			color: #43AEE3 !important;
+		}
+
+		/* Smooth sticky-aware in-page anchor scrolling */
+		html {
+			scroll-behavior: smooth !important;
+		}
+		section[id] {
+			scroll-margin-top: 105px !important;
+		}
 	</style>
 
 </head>
@@ -588,7 +604,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			to { transform: rotate(-360deg); }
 		}
 		.preloader .animation-preloader .txt-loading {
-			font: 800 2.4rem 'Nunito Sans', system-ui, -apple-system, sans-serif;
+			font: 700 2.4rem 'Space Grotesk', system-ui, -apple-system, sans-serif;
 			text-align: center;
 			user-select: none;
 			letter-spacing: 0.12em;
@@ -650,7 +666,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			letter-spacing: 5px;
 			color: #64748B;
 			margin-top: 14px;
-			font-family: 'Nunito Sans', sans-serif;
+			font-family: 'Inter', sans-serif;
 		}
 
 		/* Smooth, Unified Luxury Curtain Reveal (No split strips) */
@@ -900,7 +916,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 									</ul>
 								</li>-->
 								<li class="nav-item">
-									<a class="nav-link" href="#/why-solvantacareers">Why Solvanta Career</a>
+									<a class="nav-link" href="#why-solvanta">Why Solvanta Career</a>
 								</li>
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Resources</a>
@@ -911,14 +927,14 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 									</ul>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#/case-studies">Success Stories</a>
+									<a class="nav-link" href="#success-stories">Success Stories</a>
 								</li>
 								
 								<li class="nav-item">
-									<a class="nav-link" href="#/placement-plan">Placement Plan</a>
+									<a class="nav-link" href="#placement-plan">Placement Plan</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#/refer-and-earn">Refer & Earn</a>
+									<a class="nav-link" href="#refer-and-earn">Refer & Earn</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#/recruiter">Hire Talent</a>
@@ -926,7 +942,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 							</ul>
 						</div>
 						<div class="btn-group">
-							<a href="#contact-us" target="_blank" class="btn btn-black">Inquire Now</a>
+							<a href="#contact-us" class="btn btn-black">Inquire Now</a>
 						</div>
 					</div>
 				</nav>
@@ -1167,7 +1183,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			<div class="container">
 				<div class="inner-title-box title-color-primary">
 					<h2>Who <span>Are We</span></h2>
-<h5>Understand Who We Are Before You Decide.We believe candidates deserve clarity before commitment.</h5>
+<h5>Understand Who We Are Before You Decide. We believe candidates deserve clarity before commitment.</h5>
 				</div>
 				<div class="row">
 					<div class="col-12 col-lg-7">
@@ -1283,7 +1299,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 							</div>
 							<div class="metric-content-box">
 								<h3 class="metric-value">1800+*</h3>
-								<h5>Student Placed</h5>
+								<h5>Students Placed</h5>
 							</div>
 						</div>
 					</div>
@@ -1316,7 +1332,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- Let Our Numbers Speak Section End -->
 
 		<!-- What Makes Us Different Section Start -->
-		<section class="what-makes-us-different-section pt-100">
+		<section class="what-makes-us-different-section pt-100" id="why-solvanta">
 			<div class="container">
 				<div class="row">
 					<div class="col-12 col-lg-6">
@@ -1371,11 +1387,11 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- What Makes Us Different Section End -->
 
 		<!-- Career Progress Section Start -->
-		<section class="career-progress-section pt-100">
+		<section class="career-progress-section pt-100" id="placement-plan">
 			<div class="container">
 				<div class="career-progress-inner">
 					<div class="inner-title-box">
-						<h2>Not Just a Process-It’s Your Career Progress!</h2>
+						<h2>Not Just a Process &mdash; It's Your Career Progress!</h2>
                         <h5>Gain valuable insights and tailored advice from industry experts to refine your approach and keep advancing toward your career goals.</h5>
 					</div>
 					<div class="progress-box-main">
@@ -1594,7 +1610,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- alumni-success Section End -->		<!-- alumni-success Section End -->
 
 		<!-- placement-plan Section Start -->
-		<section class="student-testimonials-section pb-100">
+		<section class="student-testimonials-section pb-100" id="success-stories">
 			<div class="container">
 				<div class="inner-title-box">
 					<h2>See How Our Students Transform Their Careers</h2>
@@ -1686,7 +1702,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- growth-partner Section Start -->
 		<!-- growth-partner Section Start -->
 
-		 <section class="growth-partner-section bg-sea-green ptb-100">
+		 <section class="growth-partner-section bg-sea-green ptb-100" id="refer-and-earn">
 
 			<div class="container">
 
@@ -1731,7 +1747,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- faq Section Start -->
 		<!-- faq Section Start -->
 
-<section class="faq-section ptb-100">
+<section class="faq-section ptb-100" id="faqs">
 
    <div class="container">
 
@@ -1861,7 +1877,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 		<!-- let's connect Section Start -->
 		<!-- let's connect Section Start -->
 
-		<section class="lets-connect-section bg-sea-green ptb-100">
+		<section class="lets-connect-section bg-sea-green ptb-100" id="contact-us">
 
 			<div class="container">
 
@@ -1881,7 +1897,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 								
 
-							<h2>Book a call with an advisor <!--<span style="color:#488a6d;">--><!--</span>--> to get free assessment </h2>
+							<h2>Book a Call with an Advisor to Get a <span>Free Assessment</span></h2>
 
 							<div class="lets-connect-list-box">
 
