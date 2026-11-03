@@ -40,7 +40,112 @@
 <style id="wp-img-auto-sizes-contain-inline-css">
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
-</style>
+
+		/* ===== Aesthetic Custom Pointer & Cursor Animation ===== */
+		.custom-cursor-dot {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 8px;
+			height: 8px;
+			background: #43AEE3;
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 99999999;
+			transform: translate(-50%, -50%);
+			transition: opacity 0.25s ease, transform 0.1s ease-out, background-color 0.25s ease;
+			box-shadow: 0 0 10px rgba(67, 174, 227, 0.9), 0 0 20px rgba(67, 174, 227, 0.4);
+			opacity: 0;
+			will-change: transform, opacity;
+		}
+
+		.custom-cursor-follower {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 36px;
+			height: 36px;
+			border: 1.5px solid rgba(67, 174, 227, 0.7);
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(67, 174, 227, 0.15) 0%, rgba(37, 53, 111, 0.04) 65%, transparent 100%);
+			pointer-events: none;
+			z-index: 99999998;
+			transform: translate(-50%, -50%);
+			transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+						height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+						background-color 0.3s ease,
+						border-color 0.3s ease,
+						box-shadow 0.3s ease,
+						opacity 0.25s ease;
+			box-shadow: 0 0 18px rgba(67, 174, 227, 0.25);
+			opacity: 0;
+			will-change: transform, opacity;
+		}
+
+		/* Hover States on Interactive Elements */
+		body.cursor-hover .custom-cursor-follower {
+			width: 58px;
+			height: 58px;
+			background: radial-gradient(circle, rgba(67, 174, 227, 0.25) 0%, rgba(37, 53, 111, 0.1) 70%, transparent 100%);
+			border-color: #43AEE3;
+			box-shadow: 0 0 28px rgba(67, 174, 227, 0.55), inset 0 0 12px rgba(67, 174, 227, 0.2);
+		}
+
+		body.cursor-hover .custom-cursor-dot {
+			transform: translate(-50%, -50%) scale(1.4);
+			background: #FFFFFF;
+			box-shadow: 0 0 14px rgba(67, 174, 227, 1), 0 0 25px rgba(67, 174, 227, 0.8);
+		}
+
+		/* Active Click Elastic Snap */
+		body.cursor-active .custom-cursor-follower {
+			transform: translate(-50%, -50%) scale(0.82);
+			border-color: #25356F;
+			background: rgba(37, 53, 111, 0.2);
+			transition: transform 0.1s ease-out;
+		}
+
+		body.cursor-active .custom-cursor-dot {
+			transform: translate(-50%, -50%) scale(0.7);
+		}
+
+		/* Click Shockwave Ripple */
+		.cursor-shockwave {
+			position: fixed;
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 99999997;
+			border: 2px solid #43AEE3;
+			transform: translate(-50%, -50%);
+			animation: shockwaveAnim 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+
+		@keyframes shockwaveAnim {
+			0% {
+				width: 10px;
+				height: 10px;
+				opacity: 0.95;
+				box-shadow: 0 0 15px rgba(67, 174, 227, 0.8);
+			}
+			100% {
+				width: 75px;
+				height: 75px;
+				opacity: 0;
+				border-color: rgba(67, 174, 227, 0);
+				box-shadow: 0 0 35px rgba(67, 174, 227, 0);
+			}
+		}
+
+		/* Clean Fallback: Hide Custom Cursor on Touch / Mobile Devices */
+		@media (hover: none) or (pointer: coarse) {
+			.custom-cursor-dot,
+			.custom-cursor-follower,
+			.cursor-shockwave {
+				display: none !important;
+			}
+		}
+
+	</style>
 <style id="wp-emoji-styles-inline-css">
 
 	img.wp-smiley, img.emoji {
@@ -89,6 +194,10 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 
 	<body class="home wp-singular page-template page-template-home-v2 page-template-home-v2-php page page-id-1192 wp-theme-solvantacareers wp-child-theme-solvantacareersChild">
+	<!-- Solvanta Aesthetic Custom Cursor -->
+	<div class="custom-cursor-dot" id="cursorDot"></div>
+	<div class="custom-cursor-follower" id="cursorFollower"></div>
+
 		<!-- Solvanta Premium Preloader -->
 	<div id="preloader" class="preloader">
 		<div class="animation-preloader">
@@ -2389,6 +2498,103 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+</script>
+
+
+<!-- Solvanta Aesthetic Custom Cursor Script -->
+<script>
+(function() {
+    // Only initialize on desktop / devices with fine pointer (mouse)
+    if (window.matchMedia && window.matchMedia('(hover: none) or (pointer: coarse)').matches) {
+        return;
+    }
+
+    var dot = document.getElementById('cursorDot');
+    var follower = document.getElementById('cursorFollower');
+    if (!dot || !follower) return;
+
+    var mouseX = -100, mouseY = -100;
+    var followerX = -100, followerY = -100;
+    var isVisible = false;
+    var rafId = null;
+
+    // Track mouse coordinates
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        // Instant position for inner dot
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+
+        if (!isVisible) {
+            isVisible = true;
+            dot.style.opacity = '1';
+            follower.style.opacity = '1';
+            followerX = mouseX;
+            followerY = mouseY;
+        }
+    });
+
+    // Smooth physics loop for follower (lerp)
+    function animateFollower() {
+        if (isVisible) {
+            followerX += (mouseX - followerX) * 0.18;
+            followerY += (mouseY - followerY) * 0.18;
+            follower.style.left = followerX + 'px';
+            follower.style.top = followerY + 'px';
+        }
+        rafId = requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Mouse leave / enter window
+    document.addEventListener('mouseleave', function() {
+        isVisible = false;
+        dot.style.opacity = '0';
+        follower.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', function() {
+        isVisible = true;
+        dot.style.opacity = '1';
+        follower.style.opacity = '1';
+    });
+
+    // Mouse Down / Up Active Elastic Snap & Click Shockwave
+    document.addEventListener('mousedown', function(e) {
+        document.body.classList.add('cursor-active');
+
+        // Spawn aesthetic shockwave ripple
+        var wave = document.createElement('div');
+        wave.className = 'cursor-shockwave';
+        wave.style.left = e.clientX + 'px';
+        wave.style.top = e.clientY + 'px';
+        document.body.appendChild(wave);
+        setTimeout(function() {
+            wave.remove();
+        }, 650);
+    });
+
+    document.addEventListener('mouseup', function() {
+        document.body.classList.remove('cursor-active');
+    });
+
+    // Detect Hover Over Interactive Elements
+    var interactiveSelector = 'a, button, .btn, input, textarea, select, [role="button"], .different-card-box, .capability-card, .stat-metric-card, .progress-box, .board-box, .navbar-toggler, .accordion-button';
+    
+    document.addEventListener('mouseover', function(e) {
+        if (e.target && e.target.closest && e.target.closest(interactiveSelector)) {
+            document.body.classList.add('cursor-hover');
+        }
+    });
+
+    document.addEventListener('mouseout', function(e) {
+        if (e.target && e.target.closest && e.target.closest(interactiveSelector)) {
+            document.body.classList.remove('cursor-hover');
+        }
+    });
+})();
 </script>
 
 </body>
