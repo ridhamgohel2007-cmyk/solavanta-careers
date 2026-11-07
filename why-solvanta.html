@@ -33,6 +33,53 @@
 	<link rel='stylesheet' id='solvanta-read-more-css' href="assets/css/read-more.css" media='all' />
 
 	<style>
+
+		/* Universal Solvanta Base Typography & Headings */
+		:root {
+			--bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+			--font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+			--font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+		}
+		body {
+			font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+			color: #0F172A !important;
+		}
+		h1, h2, h3, h4, h5, h6,
+		.h1, .h2, .h3, .h4, .h5, .h6,
+		.inner-title-box h2,
+		.sec-title-box h2,
+		.banner-content h1,
+		.banner-content h3 {
+			font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif !important;
+			letter-spacing: -0.02em;
+		}
+
+		/* Uniform Leadership & Mentor Cards */
+		.people-card-visual {
+			overflow: hidden !important;
+			border-radius: 1.25rem 1.25rem 0 0 !important;
+			background: #EBF4FA !important;
+			height: 380px !important;
+		}
+		.people-card-visual img {
+			width: 100% !important;
+			height: 380px !important;
+			object-fit: cover !important;
+			object-position: top center !important;
+			display: block !important;
+			transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+		}
+		.people-card:hover .people-card-visual img {
+			transform: scale(1.05) !important;
+		}
+		.people-card-linkedin {
+			background-color: #25356F !important;
+			transition: background-color 0.25s ease !important;
+		}
+		.people-card-linkedin:hover {
+			background-color: #43AEE3 !important;
+		}
+
 		/* ===== Aesthetic Custom Pointer & Cursor Animation ===== */
 		.custom-cursor-dot {
 			position: fixed;
@@ -859,7 +906,7 @@
 							<div class="swiper-slide">
 								<div class="people-card">
 									<div class="people-card-visual">
-										<img src="assets/images/donald-trump.png" alt="Donald Trump" style="width: 100%; height: 380px; object-fit: cover; object-position: top center;">
+										<img src="assets/images/donald-trump.png" alt="Donald Trump" >
 									</div>
 									<div class="people-card-content p-4">
 										<div class="people-card-head d-flex justify-content-between align-items-center">
@@ -878,7 +925,7 @@
 							<div class="swiper-slide">
 								<div class="people-card">
 									<div class="people-card-visual">
-										<img src="assets/images/narendra-modi.png" alt="Narendra Modi" style="width: 100%; height: 380px; object-fit: cover; object-position: top center;">
+										<img src="assets/images/narendra-modi.png" alt="Narendra Modi" >
 									</div>
 									<div class="people-card-content p-4">
 										<div class="people-card-head d-flex justify-content-between align-items-center">
@@ -897,7 +944,7 @@
 							<div class="swiper-slide">
 								<div class="people-card">
 									<div class="people-card-visual">
-										<img src="assets/images/vladimir-putin.png" alt="Vladimir Vladimirovich Putin" style="width: 100%; height: 380px; object-fit: cover; object-position: top center;">
+										<img src="assets/images/vladimir-putin.png" alt="Vladimir Vladimirovich Putin" >
 									</div>
 									<div class="people-card-content p-4">
 										<div class="people-card-head d-flex justify-content-between align-items-center">
