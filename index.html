@@ -752,6 +752,153 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			transform: translateY(-25px) scale(0.92);
 			filter: blur(6px);
 		}
+	
+
+		/* ===== High-End Scroll Reveal Animations ===== */
+		#scroll-progress-bar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 3px;
+			width: 0%;
+			background: linear-gradient(90deg, #25356F 0%, #43AEE3 50%, #6FD4FF 100%);
+			z-index: 10000000;
+			transition: width 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+			box-shadow: 0 0 10px rgba(67, 174, 227, 0.6);
+			pointer-events: none;
+		}
+
+		/* Dynamic Header Elevation on Scroll */
+		.header-section.scrolled {
+			background: rgba(255, 255, 255, 0.94) !important;
+			backdrop-filter: blur(14px);
+			-webkit-backdrop-filter: blur(14px);
+			box-shadow: 0 8px 24px rgba(37, 53, 111, 0.08);
+			padding-top: 8px !important;
+			padding-bottom: 8px !important;
+			transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+		}
+
+		/* Core Reveal Animations */
+		.scroll-reveal {
+			opacity: 0;
+			transform: translate3d(0, 36px, 0);
+			filter: blur(3px);
+			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal.revealed {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		/* Zoom Reveal for Images, Badges, Metrics */
+		.scroll-reveal-zoom {
+			opacity: 0;
+			transform: scale(0.92) translate3d(0, 20px, 0);
+			filter: blur(3px);
+			transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal-zoom.revealed {
+			opacity: 1;
+			transform: scale(1) translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		/* Lateral Directional Reveals */
+		.scroll-reveal-left {
+			opacity: 0;
+			transform: translate3d(-36px, 0, 0);
+			filter: blur(3px);
+			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal-left.revealed {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		.scroll-reveal-right {
+			opacity: 0;
+			transform: translate3d(36px, 0, 0);
+			filter: blur(3px);
+			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+						filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
+		}
+		.scroll-reveal-right.revealed {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+
+		/* Staggered Children Delays */
+		.stagger-parent .scroll-reveal:nth-child(1),
+		.stagger-parent .scroll-reveal-zoom:nth-child(1) { transition-delay: 0.05s; }
+		.stagger-parent .scroll-reveal:nth-child(2),
+		.stagger-parent .scroll-reveal-zoom:nth-child(2) { transition-delay: 0.14s; }
+		.stagger-parent .scroll-reveal:nth-child(3),
+		.stagger-parent .scroll-reveal-zoom:nth-child(3) { transition-delay: 0.23s; }
+		.stagger-parent .scroll-reveal:nth-child(4),
+		.stagger-parent .scroll-reveal-zoom:nth-child(4) { transition-delay: 0.32s; }
+		.stagger-parent .scroll-reveal:nth-child(5),
+		.stagger-parent .scroll-reveal-zoom:nth-child(5) { transition-delay: 0.41s; }
+		.stagger-parent .scroll-reveal:nth-child(6),
+		.stagger-parent .scroll-reveal-zoom:nth-child(6) { transition-delay: 0.50s; }
+
+		/* Hover Micro-Interactions on Cards */
+		.different-card-box,
+		.capability-card,
+		.stat-metric-card,
+		.progress-box,
+		.board-box {
+			transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+						box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+						border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+		}
+		.different-card-box:hover,
+		.capability-card:hover,
+		.stat-metric-card:hover {
+			transform: translateY(-6px) !important;
+			box-shadow: 0 16px 36px rgba(37, 53, 111, 0.12) !important;
+			border-color: rgba(67, 174, 227, 0.35) !important;
+		}
+
+		/* Subtle Floating Hero Animation */
+		@keyframes floatStudent {
+			0%, 100% { transform: translateY(0px); }
+			50% { transform: translateY(-8px); }
+		}
+		.banner-image img {
+			animation: floatStudent 6s ease-in-out infinite;
+		}
+
+		/* Accessibility: Prefers Reduced Motion */
+		@media (prefers-reduced-motion: reduce) {
+			.scroll-reveal,
+			.scroll-reveal-zoom,
+			.scroll-reveal-left,
+			.scroll-reveal-right {
+				opacity: 1 !important;
+				transform: none !important;
+				filter: none !important;
+				transition: none !important;
+			}
+			.banner-image img {
+				animation: none !important;
+			}
+		}
+	
 	</style>
 </head>
 
@@ -794,8 +941,101 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	<div class="custom-cursor-dot" id="cursorDot"></div>
 	<div class="custom-cursor-follower" id="cursorFollower"></div>
 
-		<!-- Solvanta Premium Preloader -->
-	
+	<header class="header-section">
+
+		<div class="container">
+			<div class="header-section-inner">
+				<nav class="navbar navbar-expand-xl">
+					<div class="logo-with-toggle">
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+							data-bs-target="#navbarMobileToggle" aria-controls="navbarMobileToggle" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<img src="assets/images/hamburger-ic.svg" alt="Hamburger Icon" class="menu-ic">
+							<img src="assets/images/close-ic.svg" alt="Close Icon" class="close-ic">
+						</button>
+						<a class="brand-logo brand-logo-stacked" href="index.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-decoration: none;">
+							<img src="assets/images/logo-icon.png?v=3" alt="Solvanta Career Logo" class="header-logo-icon" style="height: 48px; width: auto; display: block;">
+							<img src="assets/images/logo-text.png?v=3" alt="SOLVANTA CAREER" class="header-logo-text" style="height: 12px; width: auto; display: block;">
+						</a>
+					</div>
+					<div class="top-navbar">
+						<div class="collapse navbar-collapse" id="navbarMobileToggle">
+							<ul class="navbar-nav me-auto mr-auto w-100">
+								<!--<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="programsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Programs</a>
+									<ul class="dropdown-menu" aria-labelledby="programsDropdown">
+										<li><a class="dropdown-item" href="#/program/software-development/"><img src="assets/images/menu-icon-01.svg" alt="">Software Developer</a></li>
+										
+										<li><a class="dropdown-item" href="#/program/data-analytics-machine-learning/"><img src="assets/images/menu-icon-02.svg" alt="">Data analytics/Machine learning</a></li>
+										<li><a class="dropdown-item" href="#/program/business-analytics/"><img src="assets/images/menu-icon-13.svg" alt="">Business Analytics</a></li>
+										
+										<li><a class="dropdown-item" href="#/program/data-analytics-machine-learning/"><img src="assets/images/menu-icon-12.svg" alt="">Data Engineering</a></li>
+										<li><a class="dropdown-item" href="#/program/data-analytics-machine-learning/"><img src="assets/images/menu-icon-03.svg" alt="">Data Analytics</a></li>
+										
+									</ul>
+								</li>-->
+								<!--<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="whySolvanta CareerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Why Solvanta Career</a>
+									<ul class="dropdown-menu" aria-labelledby="whySolvanta CareerDropdown">
+										<li><a class="dropdown-item" href="#/opt-student"><img src="assets/images/menu-icon-04.svg" alt="">Designed for UK Graduate &amp; Skilled Worker </a></li>
+										<li><a class="dropdown-item" href="#/support-mentorship"><img src="assets/images/menu-icon-07.svg" alt="">1:1 support & mentorship</a></li>
+										<li><a class="dropdown-item" href="#/stem-opt-real-work-experience"><img src="assets/images/menu-icon-06.svg" alt="">Real industry experience</a></li>
+										<li><a class="dropdown-item" href="#/flexible-payment"><img src="assets/images/menu-icon-05.svg" alt="">Flexible payment options</a></li>									
+										<li><a class="dropdown-item" href="#/student-reviews"><img src="assets/images/menu-icon-08.svg" alt="">Student reviews</a></li>
+									</ul>
+								</li>-->
+								<li class="nav-item">
+									<a class="nav-link" href="why-solvanta.html">Why Solvanta Career</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Resources</a>
+									<ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
+									<li><a class="dropdown-item" href="#/blogs"><img src="assets/images/menu-icon-11.svg" alt="">Blogs</a></li>
+										<li><a class="dropdown-item" href="#faqs"><img src="assets/images/menu-icon-09.svg" alt="">FAQs</a></li>
+										<li><a class="dropdown-item" href="#/student-reviews"><img src="assets/images/menu-icon-08.svg" alt="">Student reviews</a></li>
+									</ul>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#success-stories">Success Stories</a>
+								</li>
+								
+								<li class="nav-item">
+									<a class="nav-link" href="placement-plan.html">Placement Plan</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#refer-and-earn">Refer & Earn</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#/recruiter">Hire Talent</a>
+								</li>
+							</ul>
+						</div>
+						<div class="btn-group">
+							<a href="#contact-us" class="btn btn-black">Inquire Now</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<div class="overlay-bg"></div>
+	</header><!-- Wrapper Content Start -->
+	<div class="wrapper-section">
+		<!-- Banner Section Start -->
+		<section class="home-banners-section">
+			<div class="container">
+				<div class="banner-inner">
+					<div class="row">
+						<div class="col-12 col-lg-8  col-xl-7">
+							<div class="banner-content scroll-reveal">
+								<h1>Land a Sponsored Tech Job in London &amp; the UK</h1>
+<h3>We Help International Talent Secure Full-Time Roles</h3>
+								<h6>Structured placement program for Graduate Visa, Skilled Worker Visa &amp; international tech candidates — from application to interview preparation to getting you a job offer.</h6>
+								<div class="banner-btn">
+									<a href="#contact-us" class="btn btn-secondary">Schedule a Call</a>
+									<a href="javascript:;" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#handbookDownloadPopup" data-bs-dismiss="modal">Download Handbook</a>
+								</div>
+							</div>
+						</div>
 						<div class="col-12 col-lg-4 col-xl-5">
 							<div class="banner-image scroll-reveal-zoom">
 								<img src="assets/images/banner-student-img.png?v=4" alt="Solvanta Career Student">
@@ -807,7 +1047,8 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 			</div>
 		</section>
 		<!-- Banner Section End -->
-		<!-- Board Section Start -->
+		
+<!-- Board Section Start -->
 	  <section class="career-board-section">
 			<div class="container">
 				<div class="career-board-inner">
