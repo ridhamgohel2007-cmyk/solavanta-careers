@@ -361,22 +361,166 @@
 			transform: translateY(-2px);
 		}
 	</style>
+	<style id="solvanta-preloader-css">
+		.preloader {
+			align-items: center;
+			cursor: default;
+			display: flex;
+			height: 100vh;
+			justify-content: center;
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100vw;
+			z-index: 9999999;
+			overflow: hidden;
+			background: #FFFFFF;
+			transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+			will-change: transform, opacity;
+			box-shadow: 0 25px 60px rgba(15, 23, 42, 0.2);
+		}
+		.preloader .animation-preloader {
+			z-index: 1000;
+			text-align: center;
+			transition: opacity 0.4s ease-out, transform 0.4s ease-out, filter 0.4s ease-out;
+		}
+		.preloader .animation-preloader .spinner {
+			position: relative;
+			animation: preloaderSpinner 1.3s infinite linear;
+			border-radius: 50%;
+			border: 3px solid rgba(67, 174, 227, 0.18);
+			border-top-color: #43AEE3;
+			border-right-color: #25356F;
+			box-shadow: 0 0 25px rgba(67, 174, 227, 0.25);
+			height: 8.5em;
+			width: 8.5em;
+			margin: 0 auto 2rem auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.preloader .animation-preloader .spinner img.spinner-logo {
+			width: 52%;
+			height: 52%;
+			object-fit: contain;
+			animation: preloaderCounterSpin 1.3s infinite linear;
+			filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+		}
+		@keyframes preloaderSpinner {
+			to { transform: rotate(360deg); }
+		}
+		@keyframes preloaderCounterSpin {
+			to { transform: rotate(-360deg); }
+		}
+		.preloader .animation-preloader .txt-loading {
+			font: 700 2.4rem 'Space Grotesk', system-ui, -apple-system, sans-serif;
+			text-align: center;
+			user-select: none;
+			letter-spacing: 0.12em;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.preloader .animation-preloader .txt-loading .letters-space {
+			width: 0.5em;
+			display: inline-block;
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading {
+			color: rgba(15, 23, 42, 0.18);
+			position: relative;
+			display: inline-block;
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading::before {
+			animation: preloaderLettersLoading 3.5s infinite;
+			color: #25356F;
+			content: attr(data-text-preloader);
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			transform: rotateY(-90deg);
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading.letters-accent::before {
+			color: #43AEE3;
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(1)::before { animation-delay: 0.08s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(2)::before { animation-delay: 0.16s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(3)::before { animation-delay: 0.24s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(4)::before { animation-delay: 0.32s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(5)::before { animation-delay: 0.40s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(6)::before { animation-delay: 0.48s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(7)::before { animation-delay: 0.56s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(8)::before { animation-delay: 0.64s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(10)::before { animation-delay: 0.72s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(11)::before { animation-delay: 0.80s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(12)::before { animation-delay: 0.88s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(13)::before { animation-delay: 0.96s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(14)::before { animation-delay: 1.04s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(15)::before { animation-delay: 1.12s; }
+		@keyframes preloaderLettersLoading {
+			0%, 75%, 100% {
+				opacity: 0;
+				transform: rotateY(-90deg);
+			}
+			25%, 50% {
+				opacity: 1;
+				transform: rotateY(0deg);
+			}
+		}
+		.preloader p.preloader-subtext {
+			font: 600 0.85rem 'Inter', sans-serif;
+			letter-spacing: 0.25em;
+			color: #64748B;
+			margin-top: 1rem;
+		}
+		.preloader.loaded {
+			opacity: 0 !important;
+			visibility: hidden !important;
+			pointer-events: none !important;
+		}
+	</style>
 </head>
 
 <body class="page-template default-page">
+
+		<!-- Solvanta Premium Preloader -->
+		<div id="preloader" class="preloader">
+			<div class="animation-preloader">
+				<div class="spinner-container">
+					<div class="spinner">
+						<img src="assets/images/logo-icon.png?v=3" alt="Solvanta Logo" class="spinner-logo">
+					</div>
+				</div>
+				<div class="txt-loading">
+					<span data-text-preloader="S" class="letters-loading">S</span>
+					<span data-text-preloader="O" class="letters-loading">O</span>
+					<span data-text-preloader="L" class="letters-loading">L</span>
+					<span data-text-preloader="V" class="letters-loading">V</span>
+					<span data-text-preloader="A" class="letters-loading">A</span>
+					<span data-text-preloader="N" class="letters-loading">N</span>
+					<span data-text-preloader="T" class="letters-loading">T</span>
+					<span data-text-preloader="A" class="letters-loading">A</span>
+					<span class="letters-space">&nbsp;</span>
+					<span data-text-preloader="C" class="letters-loading letters-accent">C</span>
+					<span data-text-preloader="A" class="letters-loading letters-accent">A</span>
+					<span data-text-preloader="R" class="letters-loading letters-accent">R</span>
+					<span data-text-preloader="E" class="letters-loading letters-accent">E</span>
+					<span data-text-preloader="E" class="letters-loading letters-accent">E</span>
+					<span data-text-preloader="R" class="letters-loading letters-accent">R</span>
+				</div>
+				<p class="preloader-subtext">CAREER ACCELERATION PLATFORM</p>
+			</div>
+			<div class="loader-section section-left"></div>
+			<div class="loader-section section-right"></div>
+		</div>
+		<!-- Preloader End -->
+
 
 	<!-- Custom Aesthetics Mouse Cursor Elements -->
 	<div class="custom-cursor-dot" id="cursorDot"></div>
 	<div class="custom-cursor-follower" id="cursorFollower"></div>
 
-	<!-- Preloader Start -->
-	<div class="preloader">
-		<div class="loading-container">
-			<div class="loading"></div>
-			
-		</div>
-	</div>
-	<!-- Preloader End -->
+	
 
 	<!-- Header Section Start -->
 	<header class="header-section">
@@ -692,15 +836,15 @@
 							<div class="swiper-slide">
 								<div class="people-card">
 									<div class="people-card-visual">
-										<img src="assets/images/shani.png" alt="Shani Bhavsar">
+										<img src="assets/images/donald-trump.png" alt="Donald Trump" style="width: 100%; height: 380px; object-fit: cover; object-position: top center;">
 									</div>
 									<div class="people-card-content p-4">
 										<div class="people-card-head d-flex justify-content-between align-items-center">
 											<div class="people-card-info">
-												<h4>Shani Bhavsar</h4>
+												<h4>Donald Trump</h4>
 												<h6>Executive Director &amp; Founder</h6>
 											</div>
-											<a href="https://www.linkedin.com/in/shanibhavsar/" target="_blank" class="people-card-linkedin" aria-label="LinkedIn profile">
+											<a href="https://www.linkedin.com/" target="_blank" class="people-card-linkedin" aria-label="LinkedIn profile">
 												<span class="custom-icon icon-linked-in-ic"></span>
 											</a>
 										</div>
@@ -711,15 +855,15 @@
 							<div class="swiper-slide">
 								<div class="people-card">
 									<div class="people-card-visual">
-										<img src="assets/images/prachit.png" alt="Prachit Shah">
+										<img src="assets/images/narendra-modi.png" alt="Narendra Modi" style="width: 100%; height: 380px; object-fit: cover; object-position: top center;">
 									</div>
 									<div class="people-card-content p-4">
 										<div class="people-card-head d-flex justify-content-between align-items-center">
 											<div class="people-card-info">
-												<h4>Prachit Shah</h4>
+												<h4>Narendra Modi</h4>
 												<h6>Operations &amp; Delivery Lead</h6>
 											</div>
-											<a href="https://www.linkedin.com/in/prachit-shah-7b465b305/" target="_blank" class="people-card-linkedin" aria-label="LinkedIn profile">
+											<a href="https://www.linkedin.com/" target="_blank" class="people-card-linkedin" aria-label="LinkedIn profile">
 												<span class="custom-icon icon-linked-in-ic"></span>
 											</a>
 										</div>
@@ -844,15 +988,15 @@
 							<div class="swiper-slide">
 								<div class="people-card">
 									<div class="people-card-visual">
-										<img src="assets/images/munna.png" alt="Munna Pandey">
+										<img src="assets/images/vladimir-putin.png" alt="Vladimir Vladimirovich Putin" style="width: 100%; height: 380px; object-fit: cover; object-position: top center;">
 									</div>
 									<div class="people-card-content p-4">
 										<div class="people-card-head d-flex justify-content-between align-items-center">
 											<div class="people-card-info">
-												<h4>Munna Pandey</h4>
-												<h6>Technical Mentor &middot; Business Analytics</h6>
+												<h4>Vladimir Vladimirovich Putin</h4>
+												<h6>Technical Mentor &middot; Global Systems &amp; Analytics</h6>
 											</div>
-											<a href="https://www.linkedin.com/in/munna-pandey-9958971a8/" target="_blank" class="people-card-linkedin" aria-label="LinkedIn profile">
+											<a href="https://www.linkedin.com/" target="_blank" class="people-card-linkedin" aria-label="LinkedIn profile">
 												<span class="custom-icon icon-linked-in-ic"></span>
 											</a>
 										</div>
@@ -1338,6 +1482,35 @@
 	})();
 	</script>
 
+<script>
+		(function() {
+			var startTime = Date.now();
+			var minDisplayTime = 750; // Showcase smooth animation
+			var preloader = document.getElementById('preloader');
+
+			function hideLoader() {
+				if (!preloader || preloader.classList.contains('loaded')) return;
+				var elapsed = Date.now() - startTime;
+				var remaining = Math.max(0, minDisplayTime - elapsed);
+				setTimeout(function() {
+					preloader.classList.add('loaded');
+					document.body.classList.add('page-revealed');
+					setTimeout(function() {
+						preloader.style.display = 'none';
+						preloader.remove();
+					}, 900);
+				}, remaining);
+			}
+
+			if (document.readyState === 'complete') {
+				hideLoader();
+			} else {
+				window.addEventListener('load', hideLoader);
+			}
+			// Safety fallback (maximum 2.5s)
+			setTimeout(hideLoader, 2500);
+		})();
+	</script>
 </body>
 
 </html>
