@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Resources & Career Guidance Playbooks | Solvanta Career London</title>
+	<meta name="description" content="Explore expert UK tech career guides, Skilled Worker visa insights, ATS resume engineering, and salary negotiation strategies from Solvanta Career London.">
+	<link rel="icon" type="image/png" href="assets/images/logo-icon.png?v=3">
+	
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+	
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+	<link rel="stylesheet" href="assets/css/remcity-icons.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/responsive.css">
+
+	<!-- Solvanta Aesthetic Preloader & Cursor CSS -->
+	<style id="solvanta-resources-css">
+		.custom-cursor-dot {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 8px;
+			height: 8px;
+			background: #43AEE3;
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 99999999;
+			transform: translate(-50%, -50%);
+			transition: opacity 0.25s ease, transform 0.1s ease;
+			opacity: 0;
+			will-change: transform, opacity;
+		}
+		.custom-cursor-follower {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 36px;
+			height: 36px;
+			border: 1.5px solid rgba(67, 174, 227, 0.55);
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 99999998;
+			transform: translate(-50%, -50%);
+			transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+			opacity: 0;
+			background: rgba(67, 174, 227, 0.05);
+			will-change: transform, width, height;
+		}
+
+		.preloader {
+			align-items: center;
+			cursor: default;
+			display: flex;
+			height: 100vh;
+			justify-content: center;
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100vw;
+			z-index: 99999999 !important;
+			overflow: hidden;
+			background: #FFFFFF;
+			transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+			will-change: transform, opacity;
+		}
+		.preloader .animation-preloader {
+			z-index: 1000;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			transition: opacity 0.4s ease-out, transform 0.4s ease-out, filter 0.4s ease-out;
+		}
+		.preloader-logo-wrap {
+			width: 108px;
+			height: 108px;
+			margin: 0 auto 1.85rem auto;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.preloader-ring {
+			position: absolute;
+			inset: 0;
+			border-radius: 50%;
+			border: 3.5px solid rgba(67, 174, 227, 0.18);
+			border-top-color: #43AEE3;
+			border-right-color: #25356F;
+			animation: preloaderRingSpin 1.4s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+			box-shadow: 0 0 25px rgba(67, 174, 227, 0.35);
+		}
+		.preloader-logo-img {
+			width: 58px;
+			height: 58px;
+			object-fit: contain;
+			animation: preloaderLogoPulse 2s ease-in-out infinite;
+			filter: drop-shadow(0 4px 14px rgba(37, 53, 111, 0.3));
+			z-index: 2;
+			display: block;
+		}
+		@keyframes preloaderRingSpin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+		@keyframes preloaderLogoPulse {
+			0%, 100% {
+				transform: scale(1) translateY(0);
+				filter: drop-shadow(0 4px 12px rgba(37, 53, 111, 0.25)) drop-shadow(0 0 8px rgba(67, 174, 227, 0.25));
+			}
+			50% {
+				transform: scale(1.08) translateY(-4px);
+				filter: drop-shadow(0 8px 22px rgba(37, 53, 111, 0.35)) drop-shadow(0 0 20px rgba(67, 174, 227, 0.65));
+			}
+		}
+		.preloader .animation-preloader .txt-loading {
+			font: 700 2.2rem 'Space Grotesk', system-ui, -apple-system, sans-serif;
+			text-align: center;
+			user-select: none;
+			letter-spacing: 0.14em;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.preloader .animation-preloader .txt-loading .letters-space {
+			width: 0.6em;
+			display: inline-block;
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading {
+			color: rgba(15, 23, 42, 0.2);
+			position: relative;
+			display: inline-block;
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading::before {
+			animation: preloaderLettersLoading 3.5s infinite;
+			color: #25356F;
+			content: attr(data-text-preloader);
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			transform: rotateY(-90deg);
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading.letters-accent::before {
+			color: #43AEE3;
+		}
+		@keyframes preloaderLettersLoading {
+			0%, 75%, 100% { opacity: 0; transform: rotateY(-90deg); }
+			25%, 50% { opacity: 1; transform: rotateY(0deg); }
+		}
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(2)::before { animation-delay: 0.12s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(3)::before { animation-delay: 0.24s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(4)::before { animation-delay: 0.36s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(5)::before { animation-delay: 0.48s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(6)::before { animation-delay: 0.60s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(7)::before { animation-delay: 0.72s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(8)::before { animation-delay: 0.84s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(10)::before { animation-delay: 0.96s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(11)::before { animation-delay: 1.08s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(12)::before { animation-delay: 1.20s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(13)::before { animation-delay: 1.32s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(14)::before { animation-delay: 1.44s; }
+		.preloader .animation-preloader .txt-loading .letters-loading:nth-child(15)::before { animation-delay: 1.56s; }
+
+		.preloader p.preloader-subtext {
+			font: 600 0.82rem 'Inter', sans-serif;
+			letter-spacing: 0.28em;
+			color: #64748B;
+			margin-top: 1.1rem;
+		}
+		.preloader.loaded {
+			transform: translateY(-100%);
+			pointer-events: none !important;
+		}
+		.preloader.loaded .animation-preloader {
+			opacity: 0;
+			transform: translateY(-25px) scale(0.92);
+			filter: blur(6px);
+		}
+
+		/* Topic Filter Pill Buttons */
+		.blog-filter-pills {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			justify-content: flex-start;
+			align-items: center;
+			margin-bottom: 2rem;
+		}
+		.blog-filter-pill {
+			padding: 0.45rem 1.15rem;
+			border-radius: 50rem;
+			font-size: 0.875rem;
+			font-weight: 600;
+			color: #25356F;
+			background: #FFFFFF;
+			border: 1px solid #D9E2EC;
+			text-decoration: none;
+			transition: all 0.25s ease;
+		}
+		.blog-filter-pill:hover,
+		.blog-filter-pill.active {
+			background: #25356F;
+			color: #FFFFFF;
+			border-color: #25356F;
+			box-shadow: 0 4px 12px rgba(37, 53, 111, 0.2);
+		}
+
+		/* Featured Card Overrides */
+		.blog-listing-main-section .blog-latest-card {
+			box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+			border: 1px solid rgba(226, 232, 240, 0.9);
+			border-radius: 1.25rem;
+			overflow: hidden;
+			background: #FFFFFF;
+		}
+		.blog-listing-main-section .blog-latest-card .blog-featured-content {
+			box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+			border: 1px solid rgba(226, 232, 240, 0.8);
+		}
+	</style>
+</head>
+<body class="resources-page">
+
+	<!-- Custom Cursor -->
+	<div class="custom-cursor-dot" id="cursorDot"></div>
+	<div class="custom-cursor-follower" id="cursorFollower"></div>
+
+	<!-- Preloader -->
+	<div id="preloader" class="preloader">
+		<div class="animation-preloader">
+			<div class="preloader-logo-wrap">
+				<div class="preloader-ring"></div>
+				<img src="assets/images/logo-icon.png?v=3" alt="Solvanta Logo" class="preloader-logo-img">
+			</div>
+			<div class="txt-loading">
+				<span data-text-preloader="S" class="letters-loading">S</span>
+				<span data-text-preloader="O" class="letters-loading">O</span>
+				<span data-text-preloader="L" class="letters-loading">L</span>
+				<span data-text-preloader="V" class="letters-loading">V</span>
+				<span data-text-preloader="A" class="letters-loading">A</span>
+				<span data-text-preloader="N" class="letters-loading">N</span>
+				<span data-text-preloader="T" class="letters-loading">T</span>
+				<span data-text-preloader="A" class="letters-loading">A</span>
+				<span class="letters-space">&nbsp;</span>
+				<span data-text-preloader="C" class="letters-loading letters-accent">C</span>
+				<span data-text-preloader="A" class="letters-loading letters-accent">A</span>
+				<span data-text-preloader="R" class="letters-loading letters-accent">R</span>
+				<span data-text-preloader="E" class="letters-loading letters-accent">E</span>
+				<span data-text-preloader="E" class="letters-loading letters-accent">E</span>
+				<span data-text-preloader="R" class="letters-loading letters-accent">R</span>
+			</div>
+			<p class="preloader-subtext">CAREER ACCELERATION PLATFORM</p>
+		</div>
+	</div>
+
+	<!-- Header Navigation -->
+	<header class="header-section">
+		<div class="container">
+			<div class="header-section-inner">
+				<nav class="navbar navbar-expand-xl">
+					<div class="logo-with-toggle">
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+							data-bs-target="#navbarMobileToggle" aria-controls="navbarMobileToggle" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<img src="assets/images/hamburger-ic.svg" alt="Hamburger Icon" class="menu-ic">
+							<img src="assets/images/close-ic.svg" alt="Close Icon" class="close-ic">
+						</button>
+						<a class="brand-logo brand-logo-stacked" href="index.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-decoration: none;">
+							<img src="assets/images/logo-icon.png?v=3" alt="Solvanta Career Logo" class="header-logo-icon" style="height: 48px; width: auto; display: block;">
+							<img src="assets/images/logo-text.png?v=3" alt="SOLVANTA CAREER" class="header-logo-text" style="height: 12px; width: auto; display: block;">
+						</a>
+					</div>
+					<div class="top-navbar">
+						<div class="collapse navbar-collapse" id="navbarMobileToggle">
+							<ul class="navbar-nav me-auto mr-auto w-100">
+								<li class="nav-item">
+									<a class="nav-link" href="index.html">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="why-solvanta.html">Why Solvanta Career</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="placement-plan.html">Placement Plan</a>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle active" href="resources.html" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Resources</a>
+									<ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
+										<li><a class="dropdown-item active" href="resources.html"><img src="assets/images/menu-icon-11.svg" alt="">Blogs &amp; Guides</a></li>
+										<li><a class="dropdown-item" href="#faqs"><img src="assets/images/menu-icon-09.svg" alt="">FAQs</a></li>
+										<li><a class="dropdown-item" href="index.html#success-stories"><img src="assets/images/menu-icon-08.svg" alt="">Student Reviews</a></li>
+									</ul>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="index.html#success-stories">Success Stories</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="index.html#refer-and-earn">Refer &amp; Earn</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="index.html#contact-us">Hire Talent</a>
+								</li>
+							</ul>
+						</div>
+						<div class="btn-group">
+							<a href="index.html#contact-us" class="btn btn-black">Inquire Now</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<div class="overlay-bg"></div>
+	</header>
+
+	<div class="wrapper-section">
+		<!-- Section 1: Resources Banner Hero -->
+		<section class="resources-banners-section">
+			<div class="container">
+				<div class="banner-content">
+					<div class="banner-tags mb-3" style="font-size: 0.875rem; font-weight: 700; color: #43AEE3; text-transform: uppercase; letter-spacing: 0.1em;">
+						✦ London &amp; UK Career Guidance
+					</div>
+					<h1>Resources &amp; Insights</h1>
+					<h6>Actionable playbooks, Skilled Worker visa sponsorship roadmaps, ATS resume engineering, and high-value tech salary frameworks engineered for international talent in London and across the UK.</h6>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2: Main Blog & Playbook Listing -->
+		<section class="blog-listing-main-section ptb-100">
+			<div class="container">
+				<div class="blog-listing-title mb-4">
+					<div class="tag-box">
+						<span>Solvanta Knowledge Hub</span>
+						<span class="dot"></span>
+						<span>Updated for 2026 UK Market</span>
+					</div>
+					<h2>Latest Tech Career Playbooks &amp; Guides</h2>
+					<p class="text-muted">Master the UK tech hiring bar, navigate visa sponsorship regulations, and command top-tier compensation packages.</p>
+				</div>
+
+				<!-- Category Filter Pills -->
+				<div class="blog-filter-pills">
+					<a href="javascript:void(0);" class="blog-filter-pill active">All Topics</a>
+					<a href="javascript:void(0);" class="blog-filter-pill">UK Visa &amp; Sponsorship</a>
+					<a href="javascript:void(0);" class="blog-filter-pill">Tech Interview Prep</a>
+					<a href="javascript:void(0);" class="blog-filter-pill">Resume &amp; Portfolio</a>
+					<a href="javascript:void(0);" class="blog-filter-pill">Salary &amp; Negotiation</a>
+					<a href="javascript:void(0);" class="blog-filter-pill">Career Strategy</a>
+				</div>
+
+				<!-- Featured Article Card -->
+				<div class="blog-latest-card">
+					<div class="blog-featured-image">
+						<img src="assets/images/blogs/blog-featured.jpg" alt="Negotiate Tech Job Offer in London">
+					</div>
+					<div class="blog-featured-content">
+						<span class="blog-tag">Career Strategy &amp; Salary</span>
+						<h4>How to Negotiate a £70k+ Tech Job Offer in London as an International Graduate</h4>
+						<span class="blog-date">October 28, 2026 &middot; 8 min read</span>
+						<p style="font-size: 0.95rem; color: #555555; line-height: 1.5; margin-bottom: 1.25rem;">Learn proven negotiation frameworks used by Solvanta candidates to secure competitive base pay, sign-on bonuses, and guaranteed Skilled Worker visa sponsorship from UK tech employers without risking the offer.</p>
+						<a href="#contact-us" class="btn btn-secondary btn-sm" style="font-weight: 600; padding: 0.5rem 1.25rem;">Read Full Guide &rarr;</a>
+					</div>
+				</div>
+
+				<!-- Grid of 6 Articles (Elevate Layout) -->
+				<div class="row mt-5">
+					<!-- Card 1 -->
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<a href="#contact-us" class="blog-list-card">
+							<div class="blog-list-card-image">
+								<img src="assets/images/blogs/blog-uk-sponsorship.jpg" alt="UK Skilled Worker Sponsorship Guide">
+							</div>
+							<div class="blog-list-card-body">
+								<span class="blog-tag">UK Visa &amp; Compliance</span>
+								<h5>How to Find UK Employers With a Verified History of Skilled Worker Visa Sponsorship</h5>
+								<div class="blog-list-card-footer">
+									<span class="blog-date">November 2, 2026</span>
+									<span class="blog-card-arrow">
+										<span class="custom-icon icon-arrow-left"></span>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<!-- Card 2 -->
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<a href="#contact-us" class="blog-list-card">
+							<div class="blog-list-card-image">
+								<img src="assets/images/blogs/blog-no-uk-experience.jpg" alt="No UK Work Experience Advice">
+							</div>
+							<div class="blog-list-card-body">
+								<span class="blog-tag">Interview Preparation</span>
+								<h5>No UK Work Experience? How International STEM Candidates Prove Technical Competency to London Employers</h5>
+								<div class="blog-list-card-footer">
+									<span class="blog-date">October 19, 2026</span>
+									<span class="blog-card-arrow">
+										<span class="custom-icon icon-arrow-left"></span>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<!-- Card 3 -->
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<a href="#contact-us" class="blog-list-card">
+							<div class="blog-list-card-image">
+								<img src="assets/images/blogs/blog-placement-roi.jpg" alt="Is a Placement Program Worth It">
+							</div>
+							<div class="blog-list-card-body">
+								<span class="blog-tag">Placement Insights</span>
+								<h5>Is a UK Tech Placement Acceleration Program Worth It? Costs, ROI, and Placement Guarantees</h5>
+								<div class="blog-list-card-footer">
+									<span class="blog-date">October 12, 2026</span>
+									<span class="blog-card-arrow">
+										<span class="custom-icon icon-arrow-left"></span>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<!-- Card 4 -->
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<a href="#contact-us" class="blog-list-card">
+							<div class="blog-list-card-image">
+								<img src="assets/images/blogs/blog-ats-resume.jpg" alt="UK Tech ATS CV Formatting">
+							</div>
+							<div class="blog-list-card-body">
+								<span class="blog-tag">Resume Engineering</span>
+								<h5>Beating UK Tech ATS Algorithms: Engineering a High-Impact Software Engineering CV</h5>
+								<div class="blog-list-card-footer">
+									<span class="blog-date">September 30, 2026</span>
+									<span class="blog-card-arrow">
+										<span class="custom-icon icon-arrow-left"></span>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<!-- Card 5 -->
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<a href="#contact-us" class="blog-list-card">
+							<div class="blog-list-card-image">
+								<img src="assets/images/blogs/blog-psw-transition.jpg" alt="Graduate Route to Skilled Worker Transition">
+							</div>
+							<div class="blog-list-card-body">
+								<span class="blog-tag">UK Visa &amp; Compliance</span>
+								<h5>Navigating the Graduate Route (PSW) to Skilled Worker Visa Transition: 2026 Employer Playbook</h5>
+								<div class="blog-list-card-footer">
+									<span class="blog-date">September 24, 2026</span>
+									<span class="blog-card-arrow">
+										<span class="custom-icon icon-arrow-left"></span>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+
+					<!-- Card 6 -->
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<a href="#contact-us" class="blog-list-card">
+							<div class="blog-list-card-image">
+								<img src="assets/images/blogs/blog-system-design.jpg" alt="London Tech Coding Bar">
+							</div>
+							<div class="blog-list-card-body">
+								<span class="blog-tag">Technical Mastery</span>
+								<h5>System Design &amp; Live Coding Bar: How Top Tier-1 Tech Companies in London Assess Mid-to-Senior Talent</h5>
+								<div class="blog-list-card-footer">
+									<span class="blog-date">September 15, 2026</span>
+									<span class="blog-card-arrow">
+										<span class="custom-icon icon-arrow-left"></span>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<!-- Pagination -->
+				<div class="blog-pagination">
+					<nav aria-label="Blog page navigation">
+						<ul class="pagination">
+							<li class="page-item disabled">
+								<a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true">
+									<span class="custom-icon icon-down-arrow"></span>
+								</a>
+							</li>
+							<li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+							<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+							<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="javascript:void(0);">
+									<span class="custom-icon icon-down-arrow"></span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3: Download Handbook / Lead Capture -->
+		<section class="handbook-section pt-50 pb-100" style="background: #EBF4FA;">
+			<div class="container">
+				<div class="row align-items-center justify-content-between p-4 p-lg-5" style="background: #FFFFFF; border-radius: 1.25rem; border: 1px solid #D9E2EC; box-shadow: 0 10px 30px rgba(37, 53, 111, 0.06);">
+					<div class="col-12 col-lg-7">
+						<span class="badge mb-2" style="background: rgba(67, 174, 227, 0.15); color: #25356F; font-size: 0.85rem; padding: 0.4rem 0.8rem; font-weight: 700;">FREE 48-PAGE PLAYBOOK</span>
+						<h2 style="font-size: 2.25rem; font-weight: 700; color: #111A3B; margin-bottom: 1rem;">The Complete UK International Tech Placement Handbook</h2>
+						<p style="color: #555555; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem;">Everything you need to know about the Graduate Visa route, Home Office sponsor compliance, ATS-beating resume blueprints, and interview playbooks for 2026.</p>
+						<div class="d-flex flex-wrap gap-3">
+							<a href="index.html#contact-us" class="btn btn-secondary" style="padding: 0.75rem 1.75rem; font-weight: 600;">Download Free Handbook</a>
+							<a href="placement-plan.html" class="btn btn-outline-secondary" style="padding: 0.75rem 1.75rem; font-weight: 600;">Explore Placement Plan</a>
+						</div>
+					</div>
+					<div class="col-12 col-lg-4 text-center mt-4 mt-lg-0">
+						<img src="assets/images/certified-badge.png?v=2" alt="Verified Handbook Badge" style="max-width: 180px; filter: drop-shadow(0 12px 24px rgba(37,53,111,0.15));">
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4: UK Career FAQs Accordion -->
+		<section class="faq-section ptb-100" id="faqs">
+			<div class="container">
+				<div class="inner-title-box text-center mb-5">
+					<span class="badge mb-2" style="background: rgba(67, 174, 227, 0.15); color: #25356F; font-size: 0.85rem; padding: 0.4rem 0.8rem; font-weight: 700;">FREQUENTLY ASKED QUESTIONS</span>
+					<h2>Everything You Need to Know About <span>UK Placement</span></h2>
+					<p class="text-muted" style="max-width: 650px; margin: 0 auto;">Answers to the most common questions regarding visa sponsorship, UK market standards, and program timelines.</p>
+				</div>
+
+				<div class="row justify-content-center">
+					<div class="col-12 col-lg-10">
+						<div class="accordion" id="resourcesFaqAccordion">
+							<!-- FAQ 1 -->
+							<div class="accordion-item mb-3" style="border: 1px solid #E2E8F0; border-radius: 0.75rem; overflow: hidden;">
+								<h2 class="accordion-header" id="headingOne">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="font-weight: 600; color: #111A3B; background: #FFFFFF; font-size: 1.1rem; padding: 1.25rem;">
+										Can international students switch from the Graduate Route (PSW) to a Skilled Worker Visa?
+									</button>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#resourcesFaqAccordion">
+									<div class="accordion-body" style="color: #555555; line-height: 1.6; padding: 1.25rem; background: #F8FAFC;">
+										Yes. Under UK immigration rules, you can switch from a Graduate Visa to a Skilled Worker Visa at any time while your Graduate Visa remains valid, provided you secure an eligible role with a Home Office-licensed sponsor paying at or above the relevant going rate. Solvanta Career specifically prepares you to secure roles with licensed sponsors before your Graduate Visa expires.
+									</div>
+								</div>
+							</div>
+
+							<!-- FAQ 2 -->
+							<div class="accordion-item mb-3" style="border: 1px solid #E2E8F0; border-radius: 0.75rem; overflow: hidden;">
+								<h2 class="accordion-header" id="headingTwo">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-weight: 600; color: #111A3B; background: #FFFFFF; font-size: 1.1rem; padding: 1.25rem;">
+										What starting salaries can international tech graduates expect in London?
+									</button>
+								</h2>
+								<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#resourcesFaqAccordion">
+									<div class="accordion-body" style="color: #555555; line-height: 1.6; padding: 1.25rem; background: #F8FAFC;">
+										In London, software engineering, cloud, and data roles for accelerated graduates typically start between £55,000 and £75,000+ base salary, plus benefits and performance bonuses. Candidates in investment banking, fintech (Canary Wharf / City of London), and tier-1 tech firms often command higher compensation packages.
+									</div>
+								</div>
+							</div>
+
+							<!-- FAQ 3 -->
+							<div class="accordion-item mb-3" style="border: 1px solid #E2E8F0; border-radius: 0.75rem; overflow: hidden;">
+								<h2 class="accordion-header" id="headingThree">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="font-weight: 600; color: #111A3B; background: #FFFFFF; font-size: 1.1rem; padding: 1.25rem;">
+										How does Solvanta help international graduates beat UK Applicant Tracking Systems (ATS)?
+									</button>
+								</h2>
+								<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#resourcesFaqAccordion">
+									<div class="accordion-body" style="color: #555555; line-height: 1.6; padding: 1.25rem; background: #F8FAFC;">
+										Our dedicated resume engineers tailor your CV specifically to match UK corporate taxonomy, technical keywords, and quantitative commercial impact metrics. Every bullet point is calibrated to pass Workday, Taleo, Greenhouse, and Lever ATS parsers, ensuring you achieve a 3x higher callback rate.
+									</div>
+								</div>
+							</div>
+
+							<!-- FAQ 4 -->
+							<div class="accordion-item mb-3" style="border: 1px solid #E2E8F0; border-radius: 0.75rem; overflow: hidden;">
+								<h2 class="accordion-header" id="headingFour">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="font-weight: 600; color: #111A3B; background: #FFFFFF; font-size: 1.1rem; padding: 1.25rem;">
+										What technical tracks and stacks are covered under the accelerator?
+									</button>
+								</h2>
+								<div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#resourcesFaqAccordion">
+									<div class="accordion-body" style="color: #555555; line-height: 1.6; padding: 1.25rem; background: #F8FAFC;">
+										We cover the highest-demand technical tracks in the UK market: Java Enterprise Systems &amp; Spring Boot, Full-Stack TypeScript/React &amp; Node.js, Cloud &amp; DevOps (AWS/Azure/Kubernetes), Data Engineering &amp; ML, and Business / Quality Assurance Automation.
+									</div>
+								</div>
+							</div>
+
+							<!-- FAQ 5 -->
+							<div class="accordion-item mb-3" style="border: 1px solid #E2E8F0; border-radius: 0.75rem; overflow: hidden;">
+								<h2 class="accordion-header" id="headingFive">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" style="font-weight: 600; color: #111A3B; background: #FFFFFF; font-size: 1.1rem; padding: 1.25rem;">
+										How do I schedule a 1:1 strategy consultation?
+									</button>
+								</h2>
+								<div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#resourcesFaqAccordion">
+									<div class="accordion-body" style="color: #555555; line-height: 1.6; padding: 1.25rem; background: #F8FAFC;">
+										You can click the "Inquire Now" or "Schedule a Call" button on any page to submit your details. One of our Senior Career Strategists in London will review your CV and schedule an assessment call within 24 hours.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 5: Call to Action / Assessment -->
+		<section class="lets-connect-section bg-sea-green ptb-100" id="contact-us">
+			<div class="container">
+				<div class="lets-connect-inner text-center">
+					<h2>Accelerate Your UK Tech Career With <span>Solvanta</span></h2>
+					<h5>Book a confidential strategy session with our London career advisors to evaluate your eligibility, visa roadmap, and placement potential.</h5>
+					<div class="mt-4">
+						<a href="index.html#contact-us" class="btn btn-secondary btn-lg" style="padding: 0.85rem 2.25rem; font-weight: 700;">Book a Free Assessment</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- Footer Section -->
+	<footer class="footer-section">
+		<div class="container">
+			<div class="footer-top">
+				<div class="logo-social-link-box">
+					<div class="footer-logo">
+						<a href="index.html" style="display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px; text-decoration: none;">
+							<img src="assets/images/logo-icon.png?v=3" alt="Solvanta Career Logo" style="height: 44px; width: auto; display: block;">
+							<span style="font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.12em; display: block;">SOLVANTA CAREER</span>
+						</a>
+					</div>
+					<div class="social-links">
+						<ul>
+							<li><a href="https://x.com/SolvantaCareers" target="_blank"><span class="custom-icon icon-twitter-ic"></span></a></li>
+							<li><a href="https://www.instagram.com/solvantacareerspro/" target="_blank"><span class="custom-icon icon-instagram-ic"></span></a></li>
+							<li><a href="https://www.linkedin.com/company/solvantacareerspro/" target="_blank"><span class="custom-icon icon-linked-in-ic"></span></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-links-box">
+					<div class="footer-links-item">
+						<div class="links-title">Quick Links</div>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="why-solvanta.html">Why Solvanta Career</a></li>
+							<li><a href="placement-plan.html">Placement Plan</a></li>
+							<li><a href="resources.html">Resources</a></li>
+							<li><a href="index.html#success-stories">Success Stories</a></li>
+							<li><a href="index.html#faqs">FAQs</a></li>
+						</ul>
+					</div>
+					<div class="footer-links-item">
+						<div class="links-title">Placement Tracks</div>
+						<ul>
+							<li><a href="placement-plan.html">Software Engineering (Java / Cloud)</a></li>
+							<li><a href="placement-plan.html">Full-Stack Development</a></li>
+							<li><a href="placement-plan.html">Data Engineering &amp; ML</a></li>
+							<li><a href="placement-plan.html">QA &amp; Automation</a></li>
+							<li><a href="placement-plan.html">Business Analytics</a></li>
+						</ul>
+					</div>
+					<div class="footer-links-item">
+						<div class="links-title">London Headquarters</div>
+						<ul>
+							<li><a href="javascript:void(0);">1 Canada Square, Canary Wharf</a></li>
+							<li><a href="javascript:void(0);">London E14 5AA, United Kingdom</a></li>
+							<li><a href="mailto:careers@solvantacareer.com">careers@solvantacareer.com</a></li>
+							<li><a href="tel:+442079460912">+44 (0) 20 7946 0912</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p class="copyright-text">&copy; 2026 Solvanta Career Ltd. All rights reserved. Registered in England &amp; Wales.</p>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/swiper-bundle.min.js"></script>
+	
+	<!-- Custom Pointer & Preloader Script -->
+	<script>
+		(function() {
+			// Cursor tracking
+			var dot = document.getElementById('cursorDot');
+			var follower = document.getElementById('cursorFollower');
+			if (dot && follower) {
+				var posX = 0, posY = 0, mouseX = 0, mouseY = 0;
+				document.addEventListener('mousemove', function(e) {
+					mouseX = e.clientX;
+					mouseY = e.clientY;
+					dot.style.opacity = '1';
+					follower.style.opacity = '1';
+					dot.style.transform = 'translate(' + (mouseX - 4) + 'px, ' + (mouseY - 4) + 'px)';
+				});
+				function updateFollower() {
+					posX += (mouseX - posX) * 0.18;
+					posY += (mouseY - posY) * 0.18;
+					follower.style.transform = 'translate(' + (posX - 18) + 'px, ' + (posY - 18) + 'px)';
+					requestAnimationFrame(updateFollower);
+				}
+				requestAnimationFrame(updateFollower);
+			}
+
+			// Preloader Dismiss
+			var startTime = Date.now();
+			var minDisplayTime = 700;
+			var preloader = document.getElementById('preloader');
+			function hideLoader() {
+				if (!preloader || preloader.classList.contains('loaded')) return;
+				var elapsed = Date.now() - startTime;
+				var remaining = Math.max(0, minDisplayTime - elapsed);
+				setTimeout(function() {
+					preloader.classList.add('loaded');
+					setTimeout(function() {
+						preloader.style.display = 'none';
+						preloader.remove();
+					}, 850);
+				}, remaining);
+			}
+			if (document.readyState === 'complete') {
+				hideLoader();
+			} else {
+				window.addEventListener('load', hideLoader);
+			}
+			setTimeout(hideLoader, 2500);
+
+			// Filter pills interaction
+			var pills = document.querySelectorAll('.blog-filter-pill');
+			pills.forEach(function(pill) {
+				pill.addEventListener('click', function() {
+					pills.forEach(function(p) { p.classList.remove('active'); });
+					this.classList.add('active');
+				});
+			});
+		})();
+	</script>
+</body>
+</html>
