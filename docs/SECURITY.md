@@ -4,71 +4,94 @@
 Solavanta Careers is a commercial career placement platform handling candidate identities, CVs, telephone numbers, and employment histories.
 
 Our security model follows the **Principle of Defense in Depth**:
-* **Database Layer**: Hardened Row-Level Security (RLS) policies, atomic stored procedures with explicit `search_path = public, pg_temp`, and column check constraints.
-* **Storage Layer**: A strictly private storage bucket (`resumes`) rejecting arbitrary file paths, enforcing 5MB size limits, and permitting only `.pdf` and `.docx` MIME extensions. Access is granted solely through time-limited (60-second) cryptographic Signed URLs.
+* **Database Layer**: Hardened Row-Level Security (RLS) policies, atomic stored procedures with explicit empty `search_path = ''` and fully-qualified identifiers, and column check constraints.
+* **Storage Layer**: A strictly private storage bucket (`resumes`) rejecting arbitrary file paths, enforcing 5MB size limits, and permitting only `.pdf` and `.docx` MIME extensions matching canonical regex. Access is granted solely through time-limited (60-second) cryptographic Signed URLs.
 * **Application Layer**: Zero exposure of Service Role keys in frontend code; input sanitization against Cross-Site Scripting (XSS); honeypot protection against spam bots.
 * **Administrative Layer**: Secure, out-of-band bootstrapping for the initial Super Administrator with zero public self-registration.
 
 ---
 
-## 2. Secure First Admin Bootstrap Procedure
+## 2. Table-by-Table Permission Matrix
 
-Under no circumstances should the system allow public registration of administrator accounts.
-
-### Step-by-Step Secure Bootstrap:
-1. **Create Identity in Supabase Auth**:
-   - The project owner navigates to **Supabase Dashboard $\to$ Authentication $\to$ Users $\to$ Invite User** (or "Add User").
-   - Enter the client's authorized corporate email (e.g., `admin@solavantacareers.com`) and generate a strong 20+ character random password.
-2. **Assign Super Admin Role via SQL Editor**:
-   - In Supabase SQL Editor (which has `postgres` superuser access), run the one-time bootstrap script:
-     ```sql
-     INSERT INTO public.profiles (id, full_name, email, role)
-     SELECT id, 'Lead Administrator', email, 'super_admin'
-     FROM auth.users
-     WHERE email = 'admin@solavantacareers.com'
-     ON CONFLICT (id) DO UPDATE SET role = 'super_admin';
-     ```
-3. **Protection Against Privilege Escalation**:
-   - The RLS policy on `public.profiles` restricts `INSERT` and `UPDATE` of profiles exclusively to existing `super_admin` accounts.
-   - An anonymous user or regular recruiter cannot grant themselves administrative privileges.
+| Database Object | `PUBLIC` / `anon` | `authenticated` (Candidate) | `recruiter` (Staff) | `super_admin` (Executive) |
+| :--- | :--- | :--- | :--- | :--- |
+| **`profiles`** | **Blocked** (0 access) | Read Own Profile only | Read All Staff Profiles | Full CRUD on All Profiles |
+| **`jobs`** | Read `published` only | Read `published` only | Full CRUD on All Jobs | Full CRUD on All Jobs |
+| **`candidates`** | **Blocked** (Direct access) | Read Own Record (Phase 4) | Read / Update Candidates | Full CRUD on Candidates |
+| **`applications`** | **Blocked** (Direct access) | Read Own Status (Phase 4) | Read / Update Status | Full CRUD on Applications |
+| **`application_status_history`** | **Blocked** (0 access) | **Blocked** (0 access) | Read-Only Audit Log | Read-Only Audit Log |
+| **`contact_messages`** | **Insert `new` only** | **Insert `new` only** | Read / Update Status | Full CRUD on Inquiries |
+| **`resumes` Bucket** | **Insert canonical path only** | **Insert canonical path only** | Read via Signed URL (60s) | Full CRUD / Cleanup |
+| **`submit_candidate_application`** | **Execute** (Atomic RPC) | **Execute** (Atomic RPC) | **Execute** | **Execute** |
+| **`is_admin()`, `is_super_admin()`** | **Blocked** (Revoked) | **Execute** (Evaluates role) | **Execute** | **Execute** |
 
 ---
 
-## 3. Candidate Application & Resume Upload Workflow
+## 3. Resume Content Validation, Malware Scanning & Abandoned Upload Cleanup
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Candidate as Job Seeker (Browser)
-    participant Storage as Supabase Storage (Private)
-    participant DB as PostgreSQL (submit_candidate_application RPC)
-    actor Admin as Authorized Recruiter (Admin Portal)
+### 1. Multi-Layer File Validation
+Client-supplied MIME types and file extensions can be spoofed. In production:
+* **Storage Gateway**: Rejects files not matching extension `.pdf` or `.docx` and canonical path regex.
+* **Database Verification**: `submit_candidate_application` checks `SELECT 1 FROM storage.objects WHERE bucket_id = 'resumes' AND name = p_resume_storage_path`.
+* **Content Inspection (Phase 6)**: Prior to recruiter review, an automated Supabase Database Webhook or Edge Function inspects the file's binary magic bytes:
+  - PDF: `%PDF-` (`0x25 0x50 0x44 0x46`)
+  - DOCX: `PK\x03\x04` (`0x50 0x4B 0x03 0x04`)
 
-    Candidate->>Candidate: Selects file (validates format: PDF/DOCX, size <= 5MB)
-    Candidate->>Storage: Uploads file to structured path: resumes/{job_id}/{candidate_id}_{random}.pdf
-    Storage-->>Candidate: Upload confirmed (returns storage path)
-    Candidate->>DB: Calls submit_candidate_application(job_id, name, email, phone, path, ...)
-    Note over DB: Atomically verifies job is published<br/>Upserts candidate identity<br/>Enforces status = 'new'<br/>Enforces internal_notes = NULL
-    DB-->>Candidate: Application ID returned (Confirmation)
+### 2. Malware Scanning Architecture
+* Recruiter downloads are served via signed URLs that force the `Content-Disposition: attachment` header, ensuring files are downloaded rather than executed inside the administrator's browser context.
+* For enterprise compliance, uploads can be routed through an asynchronous scanning service (e.g., ClamAV or VirusTotal API) triggered on object creation.
 
-    Note over Admin: Later, Recruiter logs in
-    Admin->>DB: Query applications (RLS verified via is_admin())
-    DB-->>Admin: Returns applicant list
-    Admin->>Storage: Requests signed URL for resume path
-    Storage-->>Admin: Returns temporary Signed URL (expires in 60s)
-    Admin->>Admin: Reviews resume securely in browser
+### 3. Abandoned Upload Cleanup
+If a visitor uploads a resume file but abandons the form before submitting, a scheduled cleanup script removes unlinked files:
+```sql
+-- Scheduled query identifies abandoned resumes older than 24 hours
+DELETE FROM storage.objects
+WHERE bucket_id = 'resumes'
+  AND created_at < NOW() - INTERVAL '24 hours'
+  AND name NOT IN (SELECT resume_storage_path FROM public.applications);
 ```
 
 ---
 
-## 4. Remediation Matrix: Identified Vulnerabilities & Hardening
+## 4. Secure First Administrator Bootstrap & Recovery Procedure
 
-| # | Vulnerability Identified | Severity | Remediation Implemented in Phase 3 |
+### Step-by-Step Secure Bootstrap:
+1. **Invite Account**:
+   - The project owner logs into the Supabase Dashboard $\to$ **Authentication $\to$ Users $\to$ Invite User**.
+   - Enter the authorized administrator email (e.g., `admin@solavantacareers.com`).
+2. **Elevate to Super Admin**:
+   - In Supabase SQL Editor (which has root `postgres` privileges), run:
+     ```sql
+     INSERT INTO public.profiles (id, full_name, email, role)
+     SELECT id, 'Executive Administrator', email, 'super_admin'
+     FROM auth.users
+     WHERE email = 'admin@solavantacareers.com'
+     ON CONFLICT (id) DO UPDATE SET role = 'super_admin';
+     ```
+3. **Emergency Account Recovery**:
+   - If an administrator loses their credentials, password reset emails can be triggered exclusively by the project owner via Supabase Dashboard. Public password resets for admin tiers require out-of-band email verification.
+
+---
+
+## 5. Security Testing Checklist & Expected Results
+
+| Test Case | Tool / Method | Execution Command / Request | Expected Result |
 | :--- | :--- | :--- | :--- |
-| **1** | **Direct Public INSERT with `WITH CHECK (true)` on `applications`** | **CRITICAL** | Removed direct public INSERT on `applications`. Applications can now only be submitted through the atomic `submit_candidate_application` stored procedure, which hardcodes `status = 'new'` and `internal_notes = NULL`. |
-| **2** | **Direct Public INSERT with `WITH CHECK (true)` on `candidates`** | **HIGH** | Removed direct public INSERT on `candidates`. Candidate registration is consolidated atomically inside `submit_candidate_application`, preventing fake orphan records. |
-| **3** | **Unrestricted Upload Paths in `resumes` Storage Bucket** | **HIGH** | Replaced `WITH CHECK (bucket_id = 'resumes')` with strict path regex: `^[a-f0-9-]+/[a-f0-9-]+_[a-zA-Z0-9_-]+\.(pdf|docx)$` and lowercase extension validation. |
-| **4** | **Tampering with `contact_messages` status** | **MEDIUM** | Enforced `WITH CHECK (status = 'new' AND resolved_at IS NULL)` so visitors cannot mark inquiries as resolved or fabricate resolution timestamps. |
-| **5** | **Unsafe `search_path` on `SECURITY DEFINER` functions** | **HIGH** | Explicitly set `SET search_path = public, pg_temp` on `handle_updated_at`, `log_application_status_change`, `is_admin`, and `submit_candidate_application` to prevent CVE-class privilege hijacking. |
-| **6** | **Unvalidated Input Strings** | **MEDIUM** | Added check constraints enforcing email regex, name length bounds (2–150 chars), message length bounds (5–4000 chars), and clean URL slugs. |
-| **7** | **Unjustified Hardcoded Defaults** | **LOW** | Removed hardcoded `'London, UK (Hybrid)'` default from `jobs.location` to force explicit vacancy locations; made `visa_status` optional (`NULL`) for domestic applicants. |
+| **1. Candidate Overwrite Attempt** | Anonymous REST / cURL | Submit application with Alice's email and Bob's phone number | **PASS**: Application links to Alice, but Alice's existing phone number is NOT overwritten. |
+| **2. Status Tampering Attempt** | Anonymous REST / cURL | Submit application with payload `{"status": "hired"}` | **PASS**: Direct insert rejected by RLS (403 Forbidden). Status forced to `'new'`. |
+| **3. Fake Resume Path Injection** | Anonymous RPC call | Call `submit_candidate_application` with a non-existent storage path | **PASS**: Database rejects call with error `P0003: Resume file was not found in private storage`. |
+| **4. Arbitrary Storage Upload** | Anonymous REST / cURL | Attempt upload to `resumes/malicious.exe` or `resumes/system/exploit.pdf` | **PASS**: Rejected by Storage RLS (violates canonical path regex). |
+| **5. Contact Message Resolution Tampering** | Anonymous REST / cURL | Submit message with `{"status": "resolved", "resolved_at": "2026-01-01"}` | **PASS**: Rejected by RLS policy (`WITH CHECK (status = 'new' AND resolved_at IS NULL)`). |
+| **6. Unauthenticated Admin Query** | Anonymous REST / cURL | `GET /rest/v1/applications` with Anon Key | **PASS**: HTTP 200 OK with `[]` (Empty array returned; 0 records leaked). |
+| **7. Privilege Function Execution** | Anonymous REST / cURL | Call `public.is_admin()` with Anon Key | **PASS**: HTTP 403 Forbidden (Execution revoked from PUBLIC). |
+
+---
+
+## 6. Client Data Residency & Hosting Location Consultation
+
+* **Recommendation**: While London, UK (`eu-west-2`) is optimal for UK job placement operations and UK GDPR compliance, **the client must confirm their business data residency policy** prior to provisioning the production Supabase project.
+* **Alternative Regions Available**:
+  - `eu-west-1` (Ireland / EU GDPR)
+  - `ap-south-1` (Mumbai / India DPDP Act)
+  - `eu-central-1` (Frankfurt)
+* The client will select their required region during initial Supabase organization setup.

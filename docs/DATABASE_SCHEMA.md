@@ -3,8 +3,8 @@
 ## 1. Overview
 The Solavanta Careers platform utilizes a **normalized, hardened PostgreSQL database** hosted via Supabase.
 
-All tables are strictly protected by **PostgreSQL Row-Level Security (RLS)** and atomic Remote Procedure Calls (RPCs):
-- Public visitors can submit contact inquiries and job applications through hardened validation gates.
+All tables are strictly protected by **PostgreSQL Row-Level Security (RLS)**, explicit privilege revocations, and atomic Remote Procedure Calls (RPCs):
+- Public visitors submit contact inquiries and job applications through hardened validation gates.
 - Public visitors cannot read any candidate applications, resumes, or internal evaluation notes.
 - Only authenticated users with an authorized `admin` or `recruiter` role can view applications, update statuses, manage vacancies, and download candidate resumes.
 
@@ -55,6 +55,7 @@ erDiagram
         text linkedin_url
         text current_location
         text visa_status "Nullable (optional)"
+        boolean is_verified "Email verification flag"
         timestamp created_at
         timestamp updated_at
     }
@@ -63,7 +64,7 @@ erDiagram
         uuid id PK
         uuid job_id FK
         uuid candidate_id FK
-        text resume_storage_path "Path matching regex pattern"
+        text resume_storage_path "Canonical format: job_id/candidate_id_random.ext"
         text cover_note
         text status "new, reviewing, shortlisted, interviewing, rejected, hired"
         text internal_notes "Staff only (NULL on insert)"
@@ -97,22 +98,28 @@ erDiagram
 
 ---
 
-## 3. Data Integrity & Validation Constraints
+## 3. Canonical Storage Path Symmetrical Definition
 
-To prevent malformed or malicious data injection, every column has strict database-level check constraints:
-* **Email Constraints**: `email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'` prevents invalid email syntax.
-* **String Bounds**: `char_length(name) BETWEEN 2 AND 150`, `char_length(message) BETWEEN 5 AND 4000` prevents database buffer bloat.
-* **Slug Constraints**: `slug ~* '^[a-z0-9]+(?:-[a-z0-9]+)*$'` guarantees clean URL slugs for search engine optimization.
-* **Resume Path Regex**: `resume_storage_path ~* '^resumes/[a-f0-9-]+/[a-f0-9-]+_[a-zA-Z0-9_-]+\.(pdf|docx)$'` ensures resumes strictly follow structured, non-arbitrary paths.
+To eliminate path drift, the resume storage path is canonically defined relative to the private `resumes` bucket:
+
+$$\text{Canonical Path Format} = \underbrace{\text{job\_uuid}}_{36\text{ chars}} \,/\, \underbrace{\text{candidate\_uuid}}_{36\text{ chars}} \text{\_} \underbrace{\text{random\_hex}}_{\text{unique}} \text{.} \underbrace{\text{(pdf}|\text{docx)}}_{\text{extension}}$$
+
+* **Database Constraint** on `applications.resume_storage_path`:
+  `CHECK (resume_storage_path ~* '^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}_[a-zA-Z0-9_-]+\.(pdf|docx)$')`
+* **Storage RLS Policy** on `storage.objects.name`:
+  `CHECK (bucket_id = 'resumes' AND name ~* '^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}_[a-zA-Z0-9_-]+\.(pdf|docx)$')`
+* **Stored Procedure Verification**:
+  Inside `submit_candidate_application`, before inserting the application, the procedure verifies:
+  `SELECT EXISTS (SELECT 1 FROM storage.objects WHERE bucket_id = 'resumes' AND name = p_resume_storage_path)`
+  If the file was not genuinely uploaded, the application is rejected immediately.
 
 ---
 
-## 4. Application Submission via Atomic Stored Procedure (`submit_candidate_application`)
-Rather than relying on uncoordinated direct client `INSERT` calls, applications are processed atomically in a single PostgreSQL transaction:
-1. Verifies that the specified `job_id` exists and is actively `published`.
-2. Verifies that the resume path matches the approved bucket format.
-3. Inserts or finds the candidate by unique email.
-4. Enforces that the candidate has not already applied for this specific job (`uq_candidate_job`).
-5. Inserts the application strictly with `status = 'new'` and `internal_notes = NULL`.
+## 4. Candidate Identity Protection Workflow
 
-Anonymous users have zero direct `INSERT` permissions on `candidates` or `applications` tables, rendering client-side tampering impossible.
+1. **No Anonymous Overwrites**: When an application is submitted, if a candidate with the supplied email already exists:
+   - The system attaches the application to that existing candidate ID.
+   - The existing candidate's phone, name, and profile details **remain unchanged**.
+   - Anonymous visitors cannot alter another candidate's personal contact record.
+2. **Duplicate Prevention**: If the candidate has already applied to that exact job vacancy, the database raises an error (`P0004`) preventing duplicate submissions.
+3. **Profile Modification**: Updating personal contact records will require candidate email authentication (OTP / Magic Link) in Phase 4.
